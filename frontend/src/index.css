@@ -1,0 +1,114 @@
+
+
+html,body {
+  margin: 0;
+  height: 100vh;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: 'Lora', serif;
+}
+
+ul{
+  list-style: none;
+}
+
+a{
+  text-decoration: none;
+}
+
+
+button{
+  border: none;
+}
+
+
+header{
+  color: white;
+  text-align: center;
+  font-size: 2.5em;
+  padding: 5px;
+}
+
+.section{
+  height: 100vh;
+  width: 100%;
+  padding: 20px;
+}
+
+.l-intermediate{
+  height: 50vh;
+  color: white;
+  width: 100%;
+  text-align: center;
+  background-color: #020406;
+}
+
+.l-intermediate p{
+   font-size: 1.5em;
+}
+
+.m-btnFood{
+  color: rgb(29, 29, 29);
+  display: inline-block;
+  font-size: 2em;
+  width: 50%;
+  text-align: center;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: #fffc06;
+}
+
+.m-btnFood:hover{
+  background-color: #dad606;
+  text-decoration: none;
+  color: rgb(29, 29, 29);
+  cursor: pointer;
+}
+
+.TextContainer{
+  text-align: center;
+  line-height: 45.304px;
+  color: white;
+}
+
+.TextContainer p {
+  font-size: 2em;
+  margin-top: 15px;
+}
+
+.m-header{
+  text-align: center;
+}
+
+.m-textFeatured{
+  color:#fffc06;
+  font-size: 1.3em;
+}
+
+.m-textFeatured .tfood{
+  font-size:1em;
+}
+
+@media (min-width:768px){
+  
+  html{
+    font-size: 18px;
+  }
+
+  header{
+    text-align: left;
+  }
+
+  .TextContainer{
+    text-align: left;
+    width: 556px;
+    line-height: 54px;
+  }
+
+  
+  .m-textFeatured{
+    color:#fffc06;
+    font-size: 2em;
+  }
+
+}

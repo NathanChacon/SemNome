@@ -1,0 +1,16 @@
+.l-sectionB{
+    padding: 0;
+    overflow:auto;
+}
+
+.WrapCarousel{
+    width: 100%;
+}
+
+
+@media (min-width:768px){
+    .TextB{
+     top: 50%;
+   }
+ }
+

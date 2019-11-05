@@ -1,0 +1,55 @@
+.menu{
+    background-color: #020406;
+    overflow: auto;
+}
+
+
+.container-itens{
+    margin-top: 90px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minMax(300px,1fr));
+}
+
+.foodItens{
+    background-color: white;
+    height: 70vh;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.foodItens header{
+    text-align: center;
+    font-size: 1.5em;
+    color: black;
+}
+
+.foodItens p{
+    font-size: 1.2em;
+}
+
+.foodItens button{
+    font-size: 1.6em;
+    width: 70%;
+    padding: 10px;
+}
+
+@media (min-width:768px){
+    .foodItens header{
+        text-align: center;
+        font-size: 1.8em;
+        color: black;
+    }
+    
+    .foodItens p{
+        font-size: 1.5em;
+    }
+    
+    .foodItens button{
+        border-radius: 15px;
+        text-align: center;
+        padding: 10px;
+        font-size: 2em;
+    }
+
+}
