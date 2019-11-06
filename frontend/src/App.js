@@ -40,7 +40,7 @@ function App() {
 
   return (
     <Router>
-      <Navigation isLogged ={isLogged} verifyToken ={verifyToken} name={user.name}></Navigation>
+      <Navigation isLogged ={isLogged} verifyToken ={verifyToken} user={user}></Navigation>
       <Route exact path="/">
         <SectionA  isLogged ={isLogged} verifyToken ={verifyToken} ></SectionA>
         <Schedule></Schedule>

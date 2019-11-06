@@ -29,7 +29,7 @@ export const Navigation = (props) =>{
     }
     return(
         <div>
-      <Navbar style={{backgroundColor: '#970909',position:'fixed',width:'100%',zIndex:'4',fontSize:'1.2em',fontWeight:'bold'}} light  expand="md">
+      <Navbar style={{backgroundColor: '#970909',position:'fixed',width:'100%',zIndex:'4',fontSize:'1.2em'}} light  expand="md">
         <NavbarBrand href="/" style={{color:'white'}}>Sem Nome</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
@@ -46,7 +46,7 @@ export const Navigation = (props) =>{
               </DropdownToggle>
 
               <DropdownMenu right>
-              <DropdownItem header>Olá {props.name}</DropdownItem>
+              <DropdownItem header>Olá {props.user.name ? props.user.name : '' }</DropdownItem>
                 <DropdownItem>
                     Meus Dados
                 </DropdownItem>
@@ -56,7 +56,7 @@ export const Navigation = (props) =>{
                 <DropdownItem divider />
               </DropdownMenu>
             </UncontrolledDropdown>:<NavItem>
-              <NavLink href="/login">Login</NavLink>
+              <NavLink href="/login" style={{color:'white'}}>Login</NavLink>
             </NavItem> }
            
           </Nav>

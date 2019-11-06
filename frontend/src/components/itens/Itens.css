@@ -1,0 +1,47 @@
+.container-itens{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: fixed;
+    z-index: 4;
+    background-color: #970909;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s, height 0.3s  linear;
+}
+
+.header-itens{
+    font-size: 1.5em;
+    text-align: center;
+    position: relative;
+    margin: 0 auto;
+}
+
+.m-itens{
+    margin-top: 8%;
+    background-color: black;
+    height: 50vh;
+}
+
+.header-itens:hover{
+    cursor: pointer;
+}
+
+.is-hidden{
+    visibility: hidden;
+}
+
+.is-visible{
+    opacity: 1;
+    visibility: visible;
+}
+
+.is-extended{
+    height: 80vh;
+}
+
+.is-normal{
+    height: 15vh;
+}
