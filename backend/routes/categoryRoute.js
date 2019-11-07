@@ -6,7 +6,7 @@ const storeFile = require('../storageFile')
 route.get('/all',(req,res,next) =>{
     DataBase.getCategorys().then((i) =>{
         res.json({
-            categorys: i
+            categories: i
         })
     }).catch((e) =>{
         console.log(e)

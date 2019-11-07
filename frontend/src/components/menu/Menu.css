@@ -1,13 +1,36 @@
 .menu{
     background-color: #020406;
+    height: 92vh;
     overflow: auto;
 }
 
 
 .container-food{
-    margin-top: 90px;
+    margin-top: 2%;
     width: 100%;
     display: grid;
     gap: 6px;
     grid-template-columns: repeat(auto-fit,minMax(400px,1fr));
+}
+
+.container-category{
+    margin-top: 10%;
+    height: 20vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.m-category{
+    background-color: #970909;
+    color: white;
+    padding-top:20px;
+    padding-bottom:20px;
+    text-align: center;
+    width: 100px;
+}
+
+.m-category:hover{
+    cursor: pointer;
+    background-color: #ce0909;
 }

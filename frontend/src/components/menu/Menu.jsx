@@ -15,6 +15,7 @@ export const Menu = (props) =>{
     const helper = []
     useEffect(() => {
         getFoods(1)
+        getAllCategories()
         props.verifyToken()
     },[])
 
@@ -24,24 +25,41 @@ export const Menu = (props) =>{
         })
     }
 
+    const getAllCategories = () => {
+        axios.get('http://localhost:8080/category/all').then(res => {
+           setCategory(res.data.categories) 
+        })
+    }
+
+
     const addItens = (element) => {
            setItens([...itens,element])
     }
+
     return(
         <section className="section menu">
+            <div className="container-category">
+                {category ? category.map(cat => {
+                        return <button className="m-category" onClick={() =>{getFoods(cat.idCategory)}}>{cat.nameCategory}</button>
+                }):'carregando'}
+            </div>
             <div className="container-food">
                         {
                             food ? food.map(element => {
-                                return  <div>
-                                            <Card className="text-center" onClick={() =>{addItens(element)}}>
-                                            <CardImg top width="100%" height="100%"  src={`http://localhost:8080/${element.image}`} alt="Card image cap" />
-                                            <CardBody>
-                                                <CardTitle className="h3">{element.foodName}</CardTitle>
-                                                <CardSubtitle className="h4">Preço: {element.price}</CardSubtitle>
-                                                <Button style={{backgroundColor:"#fffc06",fontSize:"2em",marginTop:'2%',color:"black",border:"none"}}>Adicionar Na Sacola</Button>
-                                            </CardBody>
-                                            </Card>
-                                        </div>
+                                return    <Card className="text-center">
+                                            <CardImg top width="100%"   src={`http://localhost:8080/${element.image}`} alt="Card image cap" />
+                                                <CardBody>
+                                                    <CardTitle className="h3">{element.foodName}</CardTitle>
+                                                    <CardSubtitle className="h4">Preço: {element.price}</CardSubtitle>
+                                                    <Button 
+                                                    style={{backgroundColor:"#fffc06",fontSize:"2em",marginTop:'2%',color:"black",border:"none"}}
+                                                    onClick={() =>{addItens(element)}}
+                                                    >
+                                                        Adicionar Na Sacola
+                                                    </Button>
+                                                 </CardBody>
+                                           </Card>
+                                       
                             }): 'Carregando'
                         }
             </div>

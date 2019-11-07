@@ -8,7 +8,6 @@
     width: 100%;
     bottom: 0px;
     left: 0px;
-    opacity: 0;
     transition: visibility 0s, opacity 0.5s, height 0.3s  linear;
 }
 
@@ -19,29 +18,34 @@
     margin: 0 auto;
 }
 
+.m-itens-total{
+    padding: 20px;
+    font-size: 2.5em;
+    color:#fffc06;;
+}
+
 .m-itens{
     margin-top: 8%;
-    background-color: black;
+    overflow: auto;
+    background-color: #5c0505;
     height: 50vh;
+}
+
+.m-itens ul{
+    font-size: 1.5em;
+    color: white;
 }
 
 .header-itens:hover{
     cursor: pointer;
 }
 
-.is-hidden{
-    visibility: hidden;
-}
 
-.is-visible{
-    opacity: 1;
-    visibility: visible;
-}
 
 .is-extended{
     height: 80vh;
 }
 
 .is-normal{
-    height: 15vh;
+    height: 8vh;
 }
