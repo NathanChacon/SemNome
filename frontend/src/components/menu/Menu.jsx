@@ -11,8 +11,10 @@ import './Menu.css'
 export const Menu = (props) =>{
     const [food,setFood] = useState(null)
     const [itens,setItens] = useState([])
+    const [quantity,setQuantity] = useState(1)
+    const [newPrice,setNewPrice] = useState(null)
     const [category,setCategory] = useState(null)
-    const helper = []
+    const [confirmItem,setConfirmItem] = useState(null)
     useEffect(() => {
         getFoods(1)
         getAllCategories()
@@ -31,9 +33,34 @@ export const Menu = (props) =>{
         })
     }
 
+    const handleConfirmItem = (element) =>{
+        setConfirmItem(element) 
+    }
+
+
+
+    const handleQuantity = (method) =>{
+        if(method === 'increase'){
+            setQuantity(quantity + 1)
+        }else{
+            if(quantity != 1){
+                setQuantity(quantity - 1)
+            }else{
+                return
+            }  
+        }
+    }
+
+const handlePrice = (price) => {
+    return price * quantity
+}
+   
 
     const addItens = (element) => {
-           setItens([...itens,element])
+        element.quantity = quantity
+        setItens([...itens,element])
+        console.log(itens)
+        setConfirmItem(null)
     }
 
     return(
@@ -53,7 +80,7 @@ export const Menu = (props) =>{
                                                     <CardSubtitle className="h4">Preço: {element.price}</CardSubtitle>
                                                     <Button 
                                                     style={{backgroundColor:"#fffc06",fontSize:"2em",marginTop:'2%',color:"black",border:"none"}}
-                                                    onClick={() =>{addItens(element)}}
+                                                    onClick={() =>{handleConfirmItem(element)}}
                                                     >
                                                         Adicionar Na Sacola
                                                     </Button>
@@ -64,6 +91,25 @@ export const Menu = (props) =>{
                         }
             </div>
             
+            <div className = {`container-confirm ${confirmItem ?' is-confirm-visible':' is-confirm-hidden'}`}>
+                 <div className='m-confirm'>
+                       {confirmItem ? 
+                       <ul>
+                           <li>{confirmItem.foodName}</li>
+                       <li>{handlePrice(confirmItem.price)}</li>
+                           <li>
+                               Quantidade: 
+                               <button onClick={() =>{handleQuantity('decrase')}}>-</button>
+                                {quantity}
+                                <button onClick={() =>{handleQuantity('increase')}}>+</button>
+                            </li>
+                           <button onClick={() =>{addItens(confirmItem)}}>Adicionar</button>
+                       </ul>
+                       :''}
+                 </div>  
+            </div>
+           
+
            <Itens itens = {itens}></Itens>                 
         </section>
     )
