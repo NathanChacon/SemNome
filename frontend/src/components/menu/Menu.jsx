@@ -4,6 +4,7 @@ import {
     CardTitle, CardSubtitle, Button
   } from 'reactstrap';
 import {Itens} from '../itens/Itens'
+import {ConfirmItens} from '../confirmItens/ConfirmItens'
 import axios from 'axios'
 import './Menu.css'
 
@@ -14,12 +15,18 @@ export const Menu = (props) =>{
     const [quantity,setQuantity] = useState(1)
     const [newPrice,setNewPrice] = useState(null)
     const [category,setCategory] = useState(null)
+    const [selectedItens,setSelectedItens] = useState([])
     const [confirmItem,setConfirmItem] = useState(null)
+
     useEffect(() => {
         getFoods(1)
         getAllCategories()
         props.verifyToken()
     },[])
+
+    useEffect(() => {
+
+    },[newPrice])
 
     const getFoods = (id) =>{
         axios.get( `http://localhost:8080/food/${id}`).then((res) =>{
@@ -52,14 +59,19 @@ export const Menu = (props) =>{
     }
 
 const handlePrice = (price) => {
-    return price * quantity
+    parseFloat(price)
+    setNewPrice(price * quantity)
+    return newPrice
 }
    
 
     const addItens = (element) => {
-        element.quantity = quantity
-        setItens([...itens,element])
-        console.log(itens)
+        const newFeatures = {
+            ...element,
+            price: newPrice,
+            quantity:quantity
+        }
+        setSelectedItens([...selectedItens,newFeatures])
         setConfirmItem(null)
     }
 
@@ -91,26 +103,11 @@ const handlePrice = (price) => {
                         }
             </div>
             
-            <div className = {`container-confirm ${confirmItem ?' is-confirm-visible':' is-confirm-hidden'}`}>
-                 <div className='m-confirm'>
-                       {confirmItem ? 
-                       <ul>
-                           <li>{confirmItem.foodName}</li>
-                       <li>{handlePrice(confirmItem.price)}</li>
-                           <li>
-                               Quantidade: 
-                               <button onClick={() =>{handleQuantity('decrase')}}>-</button>
-                                {quantity}
-                                <button onClick={() =>{handleQuantity('increase')}}>+</button>
-                            </li>
-                           <button onClick={() =>{addItens(confirmItem)}}>Adicionar</button>
-                       </ul>
-                       :''}
-                 </div>  
-            </div>
-           
-
-           <Itens itens = {itens}></Itens>                 
+           <ConfirmItens 
+           confirmItem = {confirmItem} handlePrice = {handlePrice} quantity = {quantity} handleQuantity = {handleQuantity} addItens = {addItens}
+           newPrice = {newPrice}
+           ></ConfirmItens>                 
+           <Itens selectedItens = {selectedItens}></Itens>                 
         </section>
     )
 }

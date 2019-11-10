@@ -12,16 +12,38 @@
 }
 
 .header-itens{
-    font-size: 1.5em;
-    text-align: center;
-    position: relative;
     margin: 0 auto;
+    padding: 10px;
 }
 
+.header-itens header{
+    font-size: 1.5em;
+}
+
+
 .m-itens-total{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 20px;
-    font-size: 2.5em;
-    color:#fffc06;;
+}
+
+.m-itens-total span{
+    color:#fffc06;
+    font-size: 2em;
+    margin-right: 2%;
+}
+
+.m-itens-total button{
+    padding: 10px;
+    width: 50%;
+    background-color: #fffc06;
+    font-size: 1.5em;
+}
+
+.m-itens-total button:hover{
+    background-color: #dad606;
+    cursor: pointer;
 }
 
 .m-itens{

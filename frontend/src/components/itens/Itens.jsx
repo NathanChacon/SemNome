@@ -9,7 +9,7 @@ export const Itens = (props) =>{
 
     const handleTotal = () =>{
         let sum = 0
-        props.itens.map((e,i) => {
+        props.selectedItens.map((e,i) => {
             sum += e.price
         })
 
@@ -18,20 +18,23 @@ export const Itens = (props) =>{
     return(
         
         <div className={`container-itens ${extended ? "is-extended" : "is-normal"}`}>
-            <header className="header-itens" onClick={() => {handleSize()}}>Visualizar Sacola</header>
+            <div className="header-itens" onClick={() => {handleSize()}}>
+                <header>Visualizar Sacola</header>
+            </div>
             <div className="m-itens">
                <ul>
-                {props.itens ? props.itens.map(e =>{
-                    return<li>{e.foodName + " " + e.price}</li>   
+                {props.selectedItens ? props.selectedItens.map(e =>{
+                    return<li>{e.foodName + " " + e.price + " " + e.quantity} <button onClick={() =>{removeSelectedItem()}}>Remover</button></li>   
                 }):''}
                </ul>
             </div>
             <div className="m-itens-total">
-                Total:{handleTotal()}
+                <span>Total:{handleTotal()}</span>
+                <button>Confirmar</button>
             </div>
+            
         </div>
     )
 
 
 }
-
