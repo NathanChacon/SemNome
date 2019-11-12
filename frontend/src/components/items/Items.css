@@ -1,4 +1,4 @@
-.container-itens{
+.container-items{
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -11,54 +11,57 @@
     transition: visibility 0s, opacity 0.5s, height 0.3s  linear;
 }
 
-.header-itens{
+.header-items{
     margin: 0 auto;
     padding: 10px;
 }
 
-.header-itens header{
+.header-items header{
     font-size: 1.5em;
 }
 
 
-.m-itens-total{
+.m-items-total{
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 20px;
 }
 
-.m-itens-total span{
+.m-items-total span{
     color:#fffc06;
     font-size: 2em;
     margin-right: 2%;
 }
 
-.m-itens-total button{
+.m-items-total .link{
     padding: 10px;
+    color: black;
+    text-align: center;
     width: 50%;
     background-color: #fffc06;
     font-size: 1.5em;
 }
 
-.m-itens-total button:hover{
+.m-items-total .link:hover{
     background-color: #dad606;
+    text-decoration: none;
     cursor: pointer;
 }
 
-.m-itens{
+.m-items{
     margin-top: 8%;
     overflow: auto;
     background-color: #5c0505;
     height: 50vh;
 }
 
-.m-itens ul{
+.m-items ul{
     font-size: 1.5em;
     color: white;
 }
 
-.header-itens:hover{
+.header-items:hover{
     cursor: pointer;
 }
 

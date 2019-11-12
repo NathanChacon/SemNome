@@ -1,0 +1,69 @@
+.purchase{
+    background-color: white;
+    overflow: auto;
+    height: 100vh;
+}
+
+.purchase-container{
+    margin: 0 auto;
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+}
+
+.purchase-container h1{
+    text-align: left;
+    font-size: 1.5em;
+}
+
+.google-input{
+    width: 50%;
+    margin-top: 15%;
+}
+
+
+.payment-container{
+    width: 50%;
+    margin-top: 3%;
+    text-align: left;
+    height: 50vh;
+}
+
+.payment-items{
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(auto-fit,minMax(200px,1fr));;
+}
+
+ .methods{
+    text-align: center;
+    border: 2px solid;
+    background-color: white;
+    border-color: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.methods:focus{
+    outline:none;
+}
+
+.methods:hover{
+    cursor: pointer;
+}
+
+.error{
+    text-align: left;
+    color: #d9534f;
+}
+
+.is-incorrect{
+    border-color:#d9534f;
+}
+
+.is-method-selected{
+    border-color: #5cb85c;
+}

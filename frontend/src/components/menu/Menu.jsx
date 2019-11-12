@@ -3,21 +3,21 @@ import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button
   } from 'reactstrap';
-import {Itens} from '../itens/Itens'
+import {Items} from '../items/Items'
 import {ConfirmItens} from '../confirmItens/ConfirmItens'
 import axios from 'axios'
 import './Menu.css'
 
 
 export const Menu = (props) =>{
+    
     const [food,setFood] = useState(null)
-    const [itens,setItens] = useState([])
-    const [quantity,setQuantity] = useState(1)
     const [newPrice,setNewPrice] = useState(null)
     const [category,setCategory] = useState(null)
-    const [selectedItens,setSelectedItens] = useState([])
+    const [selectedItems,setselectedItems] = useState([])
     const [confirmItem,setConfirmItem] = useState(null)
-
+    const [idRemove,setIdRemove] = useState(0)
+    
     useEffect(() => {
         getFoods(1)
         getAllCategories()
@@ -45,34 +45,32 @@ export const Menu = (props) =>{
     }
 
 
-
-    const handleQuantity = (method) =>{
-        if(method === 'increase'){
-            setQuantity(quantity + 1)
-        }else{
-            if(quantity != 1){
-                setQuantity(quantity - 1)
-            }else{
-                return
-            }  
-        }
-    }
-
-const handlePrice = (price) => {
+const handlePrice = (price,quantity) => {
     parseFloat(price)
     setNewPrice(price * quantity)
     return newPrice
 }
    
 
-    const addItens = (element) => {
+    const addItens = (element,quantity) => {
         const newFeatures = {
             ...element,
+            idRemove: idRemove,
             price: newPrice,
             quantity:quantity
         }
-        setSelectedItens([...selectedItens,newFeatures])
+        setIdRemove(idRemove + 1)
+        setselectedItems([...selectedItems,newFeatures])
         setConfirmItem(null)
+    }
+
+
+    const removeItem = (idRemove) => {
+            const updatedItens = selectedItems.filter(item => {
+                            return item.idRemove != idRemove
+            })
+
+            setselectedItems(updatedItens)
     }
 
     return(
@@ -104,10 +102,10 @@ const handlePrice = (price) => {
             </div>
             
            <ConfirmItens 
-           confirmItem = {confirmItem} handlePrice = {handlePrice} quantity = {quantity} handleQuantity = {handleQuantity} addItens = {addItens}
+           confirmItem = {confirmItem}  addItens = {addItens} handlePrice = {handlePrice}
            newPrice = {newPrice}
            ></ConfirmItens>                 
-           <Itens selectedItens = {selectedItens}></Itens>                 
+           <Items selectedItems = {selectedItems} removeItem = {removeItem} ></Items>                 
         </section>
     )
 }

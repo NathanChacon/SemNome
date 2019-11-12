@@ -14,6 +14,7 @@ import {Schedule} from './components/intermediates/Schedule'
 import {Ifood} from './components/intermediates/Ifood'
 import {Menu} from './components/menu/Menu'
 import {Login} from './components/login/Login'
+import PurchaseForm from './components/purchaseForm/PurchaseForm'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -22,6 +23,10 @@ function App() {
   const [isLogged,setIsLogged] = useState(false)
   const[user,setUser] = useState({
     name:''
+  })
+
+  useEffect(() => {
+    console.log(process.env.REACT_APP_API_KEY)
   })
 
     const verifyToken = () => {
@@ -53,6 +58,9 @@ function App() {
       </Route>
       <Route path='/login'>
           <Login isLogged ={isLogged} verifyToken ={verifyToken}></Login>
+      </Route>
+      <Route path='/purchase'>
+          <PurchaseForm></PurchaseForm>
       </Route>
     </Router>
   );
