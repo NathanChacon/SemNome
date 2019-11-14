@@ -11,7 +11,7 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
     }
 
     const handleGoogleError = (error) => {
-        setGoogleError(error.description)
+        setGoogleError(error)
     }
 
 
@@ -21,7 +21,7 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
                 <div className="google-input">
                     <h1>Entregar em</h1>
                     <GoogleLocation handleGoogleError={handleGoogleError} googleError={googleError}></GoogleLocation>
-                    <p className='error'>{googleError ?googleError :''}</p>
+                    <p className='error'>{googleError ? googleError : ''}</p>
                 </div>
                 
                 <div className='payment-container'>

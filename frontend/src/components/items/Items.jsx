@@ -17,23 +17,23 @@ export const Items = (props) =>{
     }
     return(
         
-        <div className={`container-items ${extended ? "is-extended" : "is-normal"}`}>
-            <div className="header-items" onClick={() => {handleSize()}}>
-                <header>Visualizar Sacola</header>
+        <div className={`l-container-items ${extended ? "is-extended" : "is-normal"}`}>
+            <div className="m-header-items" onClick={() => {handleSize()}}>
+                <p>Visualizar Sacola</p>
             </div>
-            <div className="m-items">
+            <div className={`m-items ${extended ? "is-show" : 'is-hidden'}`}>
                <ul>
                 {props.selectedItems ? props.selectedItems.map(e =>{
                     return<li>{e.foodName + " " + e.price + " " + e.quantity} <button onClick={() =>{props.removeItem(e.idRemove)}}>Remover</button></li>   
                 }):''}
                </ul>
             </div>
-            <div className="m-items-total">
+            <div className={`m-items-total ${extended ? "is-show" : 'is-hidden'}`}>
                 <span>Total:{handleTotal()}</span>
                 <Link to={{
                     pathname:'purchase',
                     state: props.selectedItems
-                }} className='link'>Confirmar</Link>
+                }} className='m-btn-default link'>Confirmar</Link>
             </div>
             
         </div>

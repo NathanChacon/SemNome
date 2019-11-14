@@ -7,11 +7,7 @@ import axios from 'axios'
   useParams
 } from "react-router-dom";
 import {Navigation} from './components/nav/Nav'
-import {SectionA} from './components/sectionA/SectionA'
-import {SectionB} from './components/sectionB/SectionB'
-import {SectionC} from './components/sectionC/SectionC'
-import {Schedule} from './components/intermediates/Schedule'
-import {Ifood} from './components/intermediates/Ifood'
+import {Home} from './components/home/Home'
 import {Menu} from './components/menu/Menu'
 import {Login} from './components/login/Login'
 import PurchaseForm from './components/purchaseForm/PurchaseForm'
@@ -47,11 +43,7 @@ function App() {
     <Router>
       <Navigation isLogged ={isLogged} verifyToken ={verifyToken} user={user}></Navigation>
       <Route exact path="/">
-        <SectionA  isLogged ={isLogged} verifyToken ={verifyToken} ></SectionA>
-        <Schedule></Schedule>
-        <SectionB></SectionB>
-        <Ifood></Ifood>
-        <SectionC></SectionC>
+        <Home  isLogged ={isLogged} verifyToken ={verifyToken}></Home>
       </Route>
       <Route path='/menu'>
           <Menu isLogged ={isLogged} verifyToken ={verifyToken} ></Menu>

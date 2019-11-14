@@ -74,22 +74,29 @@ const handlePrice = (price,quantity) => {
     }
 
     return(
-        <section className="section menu">
-            <div className="container-category">
+        <section className="l-menu">
+            <div className="l-category">
                 {category ? category.map(cat => {
-                        return <button className="m-category" onClick={() =>{getFoods(cat.idCategory)}}>{cat.nameCategory}</button>
+                        return <button className="m-btn-default" onClick={() =>{getFoods(cat.idCategory)}}>{cat.nameCategory}</button>
                 }):'carregando'}
             </div>
-            <div className="container-food">
+            <div className="l-display-food">
                         {
                             food ? food.map(element => {
                                 return    <Card className="text-center">
-                                            <CardImg top width="100%"   src={`http://localhost:8080/${element.image}`} alt="Card image cap" />
-                                                <CardBody>
-                                                    <CardTitle className="h3">{element.foodName}</CardTitle>
-                                                    <CardSubtitle className="h4">Preço: {element.price}</CardSubtitle>
+                                            <CardImg top height="400px"   src={`http://localhost:8080/${element.image}`} alt="Card image cap" />
+                                                <CardBody style={{
+                                                    height:'150px'
+                                                }}>
+                                                    <CardTitle>{element.foodName}</CardTitle>
+                                                    <CardSubtitle >R${element.price}</CardSubtitle>
                                                     <Button 
-                                                    style={{backgroundColor:"#fffc06",fontSize:"2em",marginTop:'2%',color:"black",border:"none"}}
+                                                   style={{
+                                                       backgroundColor:'rgba(255, 255, 0, 0.925)',
+                                                       color:'black',
+                                                       border:'none',
+                                                       marginTop:'2%'
+                                                   }}
                                                     onClick={() =>{handleConfirmItem(element)}}
                                                     >
                                                         Adicionar Na Sacola

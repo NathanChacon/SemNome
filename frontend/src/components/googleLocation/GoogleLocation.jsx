@@ -87,18 +87,18 @@ export default class LocationSearchInput extends React.Component {
           
           if(e.types[0] == 'political'){
               if(!this.isPoliticalAreaValid(e)){
-                throw new Error('Não atendemos nessa região :(')
+                throw ('Não atendemos nessa região :(')
               }
           }
 
           if(e.types[0] == 'administrative_area_level_1'){
             if(!this.isAdmAreaValid(e)){
-              throw new Error('Não atendemos nessa região :(')
+              throw ('Não atendemos nessa região :(')
             }
           }
 
           if(i == 0 && e.types[0] != "street_number"){
-             throw new Error('Insira o numero da residência')
+             throw ('Insira o numero da residência')
           }
         
         }

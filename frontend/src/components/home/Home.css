@@ -1,0 +1,37 @@
+.l-introduction{
+    height: 100vh;
+    background-image: url('../../assets/pizza.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: auto;
+    color: white;
+}
+
+.l-intermediate{
+    background-color: rgb(14, 13, 13);
+    height: 40vh;
+    color: white;
+}
+
+.m-dark{
+    padding: 20px;
+    background:rgba(0, 0, 0, 0.4);
+    height: 100vh;
+    z-index: 1;
+}
+
+.m-text-center{
+    text-align: center;
+}
+
+.m-text-featured{
+    font-size: 1.5em;
+    color: rgba(255, 255, 0, 0.925);
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
