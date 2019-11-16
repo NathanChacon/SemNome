@@ -1,22 +1,26 @@
 import React,{useEffect,useState} from 'react'
 import { withRouter } from 'react-router-dom';
-import { mask } from './CpfMask'
+import { mask } from './Mask'
 import './PurchaseForm.css'
 import GoogleLocation from '../googleLocation/GoogleLocation'
  const PurchaseForm = (props) => {
     
     const [selectedMethod,setSelectedMethod] = useState('')
-    const [cpfError,setCpfError] = useState('')
+    const [inputError,setInputError] = useState('')
     const [inputValue,setInputValue] = useState('')
-    const [cpf,setCpf] = useState('')
     const [googleError,setGoogleError] = useState(false)
     
     
     useEffect(() =>{
-        if(cpf.length == 14){
+        if(inputValue.length == 14){
             verifyCpf()
         }
-    },[cpf])
+
+        if(inputValue.length == 18){
+            verifyCnpj()
+        }
+
+    },[inputValue])
     
     const handleSelectedMethod = (event) =>{
         setSelectedMethod(event.target.id)
@@ -26,18 +30,17 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
         setGoogleError(error)
     }
 
-    const handleCpf = (e) => {
-        if(cpf.length > 14){
-            setCpf(mask.CnpjMask(e.target.value))
+    const handleInput = (e) => {
+        if(inputValue.length > 14){
+            setInputValue(mask.CnpjMask(e.target.value))
         }else{
-            setCpf(mask.CpfMask(e.target.value))
-        }
-            
+            setInputValue(mask.CpfMask(e.target.value))
+        }          
     }
 
     const verifyCpf = async () =>{
 
-        let cpfArray = await cpf.split("")
+        let cpfArray = await inputValue.split("")
 
         let cpfComplete = await cpfArray.filter((e) => {
             return e != '.' && e != '-' ? e : ''
@@ -53,16 +56,67 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
         const secondDigit = await testDigit( mod11( getSumOfMultiplication( cpfNumber.concat( firstDigit ), 11 ) ) )
          
         if(!isEqual(firstDigit,secondDigit,cpfComplete)){
-            setCpfError(true)
+            setInputError(true)
             return
+        }else{
+            console.log('ok')
         }
 
         if(isRepeatingNumbers(cpfComplete)){
-            setCpfError(true)
+            setInputError(true)
             return
         }
 
-        setCpfError(false)
+        setInputError(false)
+    }
+
+    const verifyCnpj = async () => {
+
+        let cnpj = await inputValue.split('')
+        
+         cnpj = await cnpj.filter(e => {
+                return !isNaN(e) ? e : ''
+        })
+
+        cnpj = await cnpj.map(e => {
+            return parseInt(e)
+        })
+
+        let cnpjNumbers = cnpj.slice(0,12)
+
+        let firstDigit = (testDigit(mod11(getCnpjTotal(cnpjNumbers,5))))
+        let secondDigit = (testDigit(mod11(getCnpjTotal(cnpjNumbers.concat(firstDigit),6))))
+
+        if(isRepeatingNumbers(cnpj)){
+            console.log('cnpj invalido')
+        }
+
+        if(isCnpjDigitsEqual(firstDigit,secondDigit,cnpj)){
+            console.log('cnpj valido')
+        }else{
+            console.log('cnpj invalido')
+        }
+             
+    }
+
+    const getCnpjTotal =  (cnpjValue,mult) => {
+        let sum = 0
+         cnpjValue.forEach(value => {
+            sum += value*mult
+            --mult
+            if(mult < 2){
+                mult = 9
+            }
+        })
+        return sum
+    }
+
+    const isCnpjDigitsEqual = (dgt1,dgt2,cnpjValue) => {
+        if(cnpjValue[12] == dgt1 && cnpjValue[13] == dgt2){
+            return true
+        }else{
+            return false
+        }
     }
 
     const getSumOfMultiplication = ( list, total ) => list.reduce( toSumOfMultiplication( total ), 0 )
@@ -75,18 +129,16 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
 
     const testDigit = ( num ) =>  ( num < 2 ) ? 0 : 11 - num
    
-    const isEqual = (dgt1,dgt2,cpfNumber) => {
-        if(cpfNumber[9] == dgt1 && cpfNumber[10] == dgt2){
-            console.log('ok')
+    const isEqual = (dgt1,dgt2,value) => {
+        if(value[9] == dgt1 && value[10] == dgt2){
             return true
         }else{
-            console.log('nao')
             return false
         }
     }
 
-    const isRepeatingNumbers = (cpfComplete) =>{
-             return cpfComplete.every( ( elem ) => elem === cpfComplete[0] )
+    const isRepeatingNumbers = (value) =>{
+             return value.every( ( elem ) => elem === value[0] )
     }
        
         
@@ -128,8 +180,8 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
                 <div className="l-payment-info">
                     <h1>CPF/CNPJ</h1>
                     <form>
-                        <input type="text" maxLength="18"  onChange={(e) =>{handleCpf(e)}} value={cpf}></input>
-                        {cpfError == true ? <p>Erro</p> : ''}
+                        <input type="text" maxLength="18"  onChange={(e) =>{handleInput(e)}} value={inputValue}></input>
+                        {inputError == true ? <p>Erro</p> : ''}
                     </form>
                 </div>  
             </div>
