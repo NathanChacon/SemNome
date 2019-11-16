@@ -14,6 +14,11 @@
     justify-items: center;
 }
 
+.l-purchase-container .m-btn-default{
+    margin-top: 3%;
+    width: 50%;
+}
+
 .l-purchase-container h1{
     text-align: left;
     font-size: 1.5em;
@@ -27,14 +32,14 @@
 
 .l-payment-container{
     width: 50%;
-    margin-top: 3%;
+    margin-top: 4%;
     text-align: left;
     
 }
 
 .l-payment-info{
     width: 50%;
-    margin-top: 3%;
+    margin-top: 6%;
     text-align: left;
 }
 
@@ -73,3 +78,4 @@
 .is-method-selected{
     border-color: #5cb85c;
 }
+

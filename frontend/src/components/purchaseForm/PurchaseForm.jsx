@@ -5,10 +5,22 @@ import './PurchaseForm.css'
 import GoogleLocation from '../googleLocation/GoogleLocation'
  const PurchaseForm = (props) => {
     
+    const [errors,setErrors] = useState({
+        googleError:{
+            msg:"",
+            status:true
+        },
+        inputError:{
+            msg:"",
+            status:true
+        },
+        methodError:{
+            msg:"",
+            status:true
+        },
+    })
     const [selectedMethod,setSelectedMethod] = useState('')
-    const [inputError,setInputError] = useState('')
     const [inputValue,setInputValue] = useState('')
-    const [googleError,setGoogleError] = useState(false)
     
     
     useEffect(() =>{
@@ -26,8 +38,25 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
         setSelectedMethod(event.target.id)
     }
 
-    const handleGoogleError = (error) => {
-        setGoogleError(error)
+    const handleGoogleError = (error,isCorrect) => {
+        if(!isCorrect){
+            setErrors({
+                ...errors,
+                googleError:{
+                    msg:error,
+                    status:true
+                }
+            })
+        }else{
+            setErrors({
+                ...errors,
+                googleError:{
+                    msg:"",
+                    status:false
+                }
+            })
+        }
+       
     }
 
     const handleInput = (e) => {
@@ -56,18 +85,34 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
         const secondDigit = await testDigit( mod11( getSumOfMultiplication( cpfNumber.concat( firstDigit ), 11 ) ) )
          
         if(!isEqual(firstDigit,secondDigit,cpfComplete)){
-            setInputError(true)
+            setErrors({
+                ...errors,
+                inputError:{
+                    msg:"Por favor, insira um cpf válido",
+                    status:true
+                }
+            })
             return
-        }else{
-            console.log('ok')
         }
 
         if(isRepeatingNumbers(cpfComplete)){
-            setInputError(true)
+            setErrors({
+                ...errors,
+                inputError:{
+                    msg:"Por favor, insira um cpf válido",
+                    status:true
+                }
+            })
             return
         }
 
-        setInputError(false)
+        setErrors({
+            ...errors,
+            inputError:{
+                msg:"",
+                status:false
+            }
+        })
     }
 
     const verifyCnpj = async () => {
@@ -88,14 +133,34 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
         let secondDigit = (testDigit(mod11(getCnpjTotal(cnpjNumbers.concat(firstDigit),6))))
 
         if(isRepeatingNumbers(cnpj)){
-            console.log('cnpj invalido')
+            setErrors({
+                    ...errors,
+                    inputError:{
+                        msg:"Por favor, insira um cnpj válido",
+                        status:true
+                    }
+                })
+                return
         }
 
         if(isCnpjDigitsEqual(firstDigit,secondDigit,cnpj)){
-            console.log('cnpj valido')
-        }else{
-            console.log('cnpj invalido')
+                setErrors({
+                    ...errors,
+                    inputError:{
+                        msg:"Por favor, insira um cnpj válido",
+                        status:true
+                    }
+                })
+                return
         }
+
+        setErrors({
+            ...errors,
+            inputError:{
+                msg:"",
+                status:false
+            }
+        })
              
     }
 
@@ -140,6 +205,14 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
     const isRepeatingNumbers = (value) =>{
              return value.every( ( elem ) => elem === value[0] )
     }
+
+    const handleSendOrder = () => {
+            
+            if(errors.googleError.status || errors.inputError.status || !selectedMethod){
+                console.log('preencha as informações corretamente')
+            }
+
+    }
        
         
 
@@ -149,8 +222,8 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
             <div className='l-purchase-container'>
                 <div className="m-google-input">
                     <h1>Entregar em</h1>
-                    <GoogleLocation handleGoogleError={handleGoogleError} googleError={googleError}></GoogleLocation>
-                    <p className='error'>{googleError ? googleError : ''}</p>
+                    <GoogleLocation handleGoogleError={handleGoogleError}></GoogleLocation>
+                    <p className='error'>{errors.googleError.status ? errors.googleError.msg : ''}</p>
                 </div>
                 
                 <div className='l-payment-container'>
@@ -181,9 +254,10 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
                     <h1>CPF/CNPJ</h1>
                     <form>
                         <input type="text" maxLength="18"  onChange={(e) =>{handleInput(e)}} value={inputValue}></input>
-                        {inputError == true ? <p>Erro</p> : ''}
+                        {<p className='error'>{errors.inputError.status ? errors.inputError.msg : ''}</p>}
                     </form>
                 </div>  
+                <button className="m-btn-default" onClick={() => {handleSendOrder()}}>Fazer Pedido</button>
             </div>
         </section>
     )

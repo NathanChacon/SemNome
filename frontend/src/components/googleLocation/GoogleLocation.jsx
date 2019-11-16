@@ -23,6 +23,7 @@ export default class LocationSearchInput extends React.Component {
   }
   
   handleChange = address => {
+    this.props.handleGoogleError("",false)
     this.setState({ address });
   };
  
@@ -82,7 +83,6 @@ export default class LocationSearchInput extends React.Component {
     geocodeByAddress(address)
       .then(results => {
         this.setState({ address })
-        console.log(results)
         results[0].address_components.forEach((e,i) =>{
           
           if(e.types[0] == 'political'){
@@ -105,9 +105,9 @@ export default class LocationSearchInput extends React.Component {
       )
         console.log(results[0].formatted_address)
     })
-      .then(latLng => this.props.handleGoogleError(false))
+      .then(latLng => this.props.handleGoogleError("",true))
       .catch(error =>{
-        this.props.handleGoogleError(error)
+        this.props.handleGoogleError(error,false)
       });
   };
  
