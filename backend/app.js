@@ -9,9 +9,12 @@ const passport = require('passport')
 const passportSetup = require('./passportSetup')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
+
 const category = require('./routes/categoryRoute')
 const food = require('./routes/foodRoute')
 const auth = require('./routes/auth')
+const buy = require('./routes/buy')
+
 const sessionConfig = require('./config/sessionConfig')
 const expressSession = require('express-session')
 
@@ -40,6 +43,7 @@ app.use(express.static('public'));
 app.use('/food',food)
 app.use('/category',category)
 app.use('/auth',auth)
+app.use('/buy',buy)
 
 
 
