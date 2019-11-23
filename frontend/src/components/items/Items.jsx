@@ -10,7 +10,7 @@ export const Items = (props) =>{
     const handleTotal = () =>{
         let sum = 0
         props.selectedItems.map((e,i) => {
-            sum += e.price
+            sum += e.price * e.quantity
         })
 
         return sum

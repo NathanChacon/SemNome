@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-
+import './ConfirmItens.css'
 export const ConfirmItens = (props) =>{
         
     const [quantity,setQuantity] = useState(1)
@@ -19,7 +19,7 @@ export const ConfirmItens = (props) =>{
  
     
     return(
-            <div className = {`container-confirm ${props.confirmItem ?' is-confirm-visible':' is-confirm-hidden'}`}>
+            <div className = {`l-container-confirm ${props.confirmItem ?' is-confirm-visible':' is-confirm-hidden'}`}>
             <div className='m-confirm'>
                   {props.confirmItem ?
                   <ul>

@@ -1,5 +1,6 @@
 import React,{useState,useEffect,useRef} from 'react'
 import axios from 'axios'
+import { stringify } from 'querystring';
 
 export default function PaypalButton({ product }) {
     const [paidFor, setPaidFor] = useState(false);
@@ -7,20 +8,50 @@ export default function PaypalButton({ product }) {
     const paypalRef = useRef();
     
     useEffect(() => {
+      let items = []
+      let total = 0
+      product.forEach((e) =>{
+           total += e.price * e.quantity
+           let helper = {
+             name:e.foodName,
+             description:e.foodDescription,
+             sku:e.idFood,
+             unit_amount:{
+               currency_code:"BRL",
+               value: e.price
+             },
+             quantity: e.quantity
+           }
+           items.push(helper)
+      })
+
+      console.log(items[0])
       window.paypal
         .Buttons({
           createOrder: (data, actions) => {
             return actions.order.create({
               purchase_units: [
                 {
-                  description: product.foodName,
-                  amount: {
-                    currency_code: 'BRL',
-                    value: product.price,
-                  },
-                },
-              ],
-            });
+                    reference_id: "PUHF",
+                    description: "Some description",
+    
+                    custom_id: "Something7364",
+                    soft_descriptor: "Great description 1",
+                    amount: {
+                        currency_code: "BRL",
+                        value: total,
+                        breakdown: {
+                            item_total: {
+                                currency_code: "BRL",
+                                value: total
+                            }
+                        }
+                    },
+                    items: items,
+    
+                }
+            ]
+        });
           },
           onApprove: function(data, actions) {
 
@@ -72,7 +103,7 @@ export default function PaypalButton({ product }) {
         <div>
           {error && <div>Uh oh, an error occurred! {error.message}</div>}
           <h1>
-            {product.foodName} for ${product.price}
+            
           </h1>
           <div ref={paypalRef} />
         </div>

@@ -56,7 +56,6 @@ const handlePrice = (price,quantity) => {
         const newFeatures = {
             ...element,
             idRemove: idRemove,
-            price: newPrice,
             quantity:quantity
         }
         setIdRemove(idRemove + 1)

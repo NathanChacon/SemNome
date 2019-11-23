@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from 'react'
 import { withRouter } from 'react-router-dom';
 import { mask } from './Mask'
+import PaypalButton from '../paypalButton/PaypalButton'
 import './PurchaseForm.css'
 import GoogleLocation from '../googleLocation/GoogleLocation'
  const PurchaseForm = (props) => {
@@ -21,7 +22,7 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
     })
     const [selectedMethod,setSelectedMethod] = useState('')
     const [inputValue,setInputValue] = useState('')
-    
+
     
     useEffect(() =>{
         if(inputValue.length == 14){
@@ -248,6 +249,7 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
                             <button className='methods' id="ValeRefeicao">
                                 Vale Refeição
                             </button>
+                            <PaypalButton product = {props.location.state}></PaypalButton>
                         </div>
                 </div>
                 <div className="l-payment-info">
