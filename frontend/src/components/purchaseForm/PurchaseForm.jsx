@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react'
-import { withRouter } from 'react-router-dom';
+import { withRouter,Redirect} from 'react-router-dom';
 import { mask } from './Mask'
 import PaypalButton from '../paypalButton/PaypalButton'
 import './PurchaseForm.css'
@@ -20,11 +20,14 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
             status:true
         },
     })
+    const [address,setAddress] = useState('')
     const [selectedMethod,setSelectedMethod] = useState('')
     const [inputValue,setInputValue] = useState('')
 
     
+
     useEffect(() =>{
+
         if(inputValue.length == 14){
             verifyCpf()
         }
@@ -57,7 +60,15 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
                 }
             })
         }
-       
+    }
+
+    const handleAddress = (address) => {
+        setAddress(address)
+    }
+
+    const verifyAddress = () => {
+        console.log('oi')
+        console.log(address)
     }
 
     const handleInput = (e) => {
@@ -219,11 +230,12 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
 
 
     return(
+        
         <section className='l-purchase'>
-            <div className='l-purchase-container'>
+            {props.location.state.length === 0 ? <Redirect to='/menu'></Redirect> : <div className='l-purchase-container'>
                 <div className="m-google-input">
                     <h1>Entregar em</h1>
-                    <GoogleLocation handleGoogleError={handleGoogleError}></GoogleLocation>
+                    <GoogleLocation handleGoogleError={handleGoogleError} handleAddress = {handleAddress}></GoogleLocation>
                     <p className='error'>{errors.googleError.status ? errors.googleError.msg : ''}</p>
                 </div>
                 
@@ -249,7 +261,7 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
                             <button className='methods' id="ValeRefeicao">
                                 Vale Refeição
                             </button>
-                            <PaypalButton product = {props.location.state}></PaypalButton>
+                            <PaypalButton product = {props.location.state} address={address}></PaypalButton>
                         </div>
                 </div>
                 <div className="l-payment-info">
@@ -261,7 +273,9 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
                 </div>  
                 <button className="m-btn-default" onClick={() => {handleSendOrder()}}>Fazer Pedido</button>
             </div>
-        </section>
+       }
+    </section> 
+            
     )
 }
 

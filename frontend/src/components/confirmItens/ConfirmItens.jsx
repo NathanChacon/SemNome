@@ -24,14 +24,14 @@ export const ConfirmItens = (props) =>{
                   {props.confirmItem ?
                   <ul>
                       <li>{props.confirmItem.foodName}</li>
-                  <li>{props.handlePrice(props.confirmItem.price,quantity)}</li>
+                  <li>{'R$' + props.handlePrice(props.confirmItem.price,quantity)}</li>
                       <li>
-                          Quantidade: 
-                          <button onClick={() =>{handleQuantity('decrase')}}>-</button>
+                          Quantidade:      
+                           <button className="btn-quantity" onClick={() =>{handleQuantity('decrase')}}> - </button>
                            {quantity}
-                           <button onClick={() =>{handleQuantity('increase')}}>+</button>
+                           <button className="btn-quantity" onClick={() =>{handleQuantity('increase')}}> + </button>
                        </li>
-                      <button onClick={() =>{props.addItens(props.confirmItem,quantity)}}>Adicionar</button>
+                      <button className="m-btn-default comfirmItems" onClick={() =>{props.addItens(props.confirmItem,quantity)}}>Adicionar</button>
                   </ul>
                   :''}
             </div>  

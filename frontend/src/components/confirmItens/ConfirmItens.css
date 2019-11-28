@@ -1,0 +1,67 @@
+.container-category{
+    margin-top: 10%;
+    height: 20vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.l-container-confirm{
+    position: fixed;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    transition: all .3s ease-in-out;
+    background-color: rgba(36, 35, 35, 0.8);
+}
+
+.m-confirm{
+    height: 50vh;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 50%;
+}
+
+.btn-quantity{
+    background-color: rgba(255, 255, 0, 0.925);
+
+}
+
+ .comfirmItems{
+    background-color: rgba(255, 255, 0, 0.925);
+    margin-top: 2%;
+    padding: 10px;
+    width: 200px;
+}
+
+.is-confirm-visible{
+    visibility: visible;
+    opacity: 1;
+}
+
+.is-confirm-hidden{
+    visibility: hidden;
+    opacity: 0;
+}
+
+.m-category{
+    background-color: #970909;
+    color: white;
+    padding-top:20px;
+    padding-bottom:20px;
+    text-align: center;
+    width: 100px;
+}
+
+.m-category:hover{
+    cursor: pointer;
+    background-color: #ce0909;
+}

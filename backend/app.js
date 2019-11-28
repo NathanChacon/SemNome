@@ -38,16 +38,24 @@ app.use(passport.session())
 app.use(express.static('public'));
 
 
+const authCheck = (req, res, next) => {
+  console.log('Passei por aqui')
+  if(req.user){
+      next()
+  }else{
+      res.send('Você entrar na sua conta para efetuar essa operação').status(400)
+  }
+};
+
 
 
 app.use('/food',food)
 app.use('/category',category)
 app.use('/auth',auth)
-app.use('/buy',buy)
+app.use('/buy',authCheck,buy)
 
 
 
 app.listen(8080,() => {
     console.log('Server rodando')
 })
-

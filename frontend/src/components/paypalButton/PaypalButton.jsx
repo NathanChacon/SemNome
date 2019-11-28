@@ -2,11 +2,12 @@ import React,{useState,useEffect,useRef} from 'react'
 import axios from 'axios'
 import { stringify } from 'querystring';
 
-export default function PaypalButton({ product }) {
+export default function PaypalButton({product,address}) {
     const [paidFor, setPaidFor] = useState(false);
     const [error, setError] = useState(null);
     const paypalRef = useRef();
-    
+
+
     useEffect(() => {
       let items = []
       let total = 0
@@ -25,7 +26,6 @@ export default function PaypalButton({ product }) {
            items.push(helper)
       })
 
-      console.log(items[0])
       window.paypal
         .Buttons({
           createOrder: (data, actions) => {
@@ -48,7 +48,6 @@ export default function PaypalButton({ product }) {
                         }
                     },
                     items: items,
-    
                 }
             ]
         });
@@ -75,10 +74,13 @@ export default function PaypalButton({ product }) {
                   authorizationID: authorizationID
                 }
               })
+              .then(_ => {console.log('succes')})
+              .catch(e => {console.log(e)})
             });
           },
           onError: err => {
             setError(err);
+            console.log('Um erro aconteceu')
             console.error(err);
           },
           locale:'pt_BR',
@@ -90,22 +92,13 @@ export default function PaypalButton({ product }) {
         })
         .render(paypalRef.current);
     }, [product.foodName, product.price]);
-    
-    if (paidFor) {
-        return (
-          <div>
-            <h1>Parabens voce comprou {product.foodName}!</h1>
-          </div>
-        );
-      }
+
     
       return (
         <div>
           {error && <div>Uh oh, an error occurred! {error.message}</div>}
-          <h1>
-            
-          </h1>
-          <div ref={paypalRef} />
+            <div ref={paypalRef} />
+            {console.log(paypalRef)}
         </div>
       );
     }

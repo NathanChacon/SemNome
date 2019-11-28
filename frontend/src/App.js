@@ -3,6 +3,7 @@ import axios from 'axios'
  import {
   BrowserRouter as Router,
   Switch,
+  Redirect,
   Route,
   useParams
 } from "react-router-dom";
@@ -22,11 +23,19 @@ function App() {
   })
 
   useEffect(() => {
+    console.log('testandp')
     console.log(process.env.REACT_APP_API_KEY)
   })
 
+  const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} render={(props) => (
+      isLogged === true
+        ? <Component {...props} />
+        : <Redirect to='/login' />
+    )} />          
+  )
+
     const verifyToken = () => {
-      console.log('verificando')
       axios.get('http://localhost:8080/auth/check', {withCredentials: true}).then((res) =>{
         if(!isLogged){
           setIsLogged(true)
@@ -45,15 +54,13 @@ function App() {
       <Route exact path="/">
         <Home  isLogged ={isLogged} verifyToken ={verifyToken}></Home>
       </Route>
-      <Route path='/menu'>
+      <Route exact path='/menu'>
           <Menu isLogged ={isLogged} verifyToken ={verifyToken} ></Menu>
       </Route>
       <Route path='/login'>
           <Login isLogged ={isLogged} verifyToken ={verifyToken}></Login>
       </Route>
-      <Route path='/purchase'>
-          <PurchaseForm></PurchaseForm>
-      </Route>
+      <PrivateRoute path='/purchase' component={PurchaseForm} />
     </Router>
   );
 }
