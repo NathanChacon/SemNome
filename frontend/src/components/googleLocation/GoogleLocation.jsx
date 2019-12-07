@@ -24,11 +24,13 @@ export default class LocationSearchInput extends React.Component {
   
   handleChange = address => {
     this.props.handleGoogleError("",false)
+    this.props.handleAddress("")
     this.setState({ address });
   };
  
    isPoliticalAreaValid = element =>{
-    switch(element.long_name){
+
+    switch(element){
         case 'Brás de Pina':
         return true
         break;
@@ -62,18 +64,26 @@ export default class LocationSearchInput extends React.Component {
         break;
 
         default:
-         return false
+          throw 'Não atendemos nessa região :('
       }
   }
 
   isAdmAreaValid = (element) => {
-        if(element.long_name !== "Rio de Janeiro"){
-          return false
+        if(element !== "Rio de Janeiro"){
+          throw 'Não atendemos nessa região :('
         }else{
           return true
         }
   }
-  
+
+  verifyAdressNumber = (element) => {
+    if(element !== "street_number"){
+        throw 'Insira o numero da residência'
+    }else{
+        return true
+    }
+  }
+   
   onError = (status, clearSuggestions) => {
     console.log('Google Maps API returned error with status: ', status)
     clearSuggestions()
@@ -81,33 +91,19 @@ export default class LocationSearchInput extends React.Component {
 
   handleSelect = address => {
     geocodeByAddress(address)
-      .then(results => {
-        this.setState({ address })
-        results[0].address_components.forEach((e,i) =>{
-          
-          if(e.types[0] == 'political'){
-              if(!this.isPoliticalAreaValid(e)){
-                throw ('Não atendemos nessa região :(')
-              }
-          }
-
-          if(e.types[0] == 'administrative_area_level_1'){
-            if(!this.isAdmAreaValid(e)){
-              throw ('Não atendemos nessa região :(')
-            }
-          }
-
-          if(i == 0 && e.types[0] != "street_number"){
-             throw ('Insira o numero da residência')
-          }
-        
-        }
-      )
-        console.log(results[0].formatted_address)
+      .then( async results => {
+          this.setState({ address })
+          await this.verifyAdressNumber(results[0].address_components[0].types[0])
+          await this.isAdmAreaValid(results[0].address_components[4].long_name)
+          await this.isPoliticalAreaValid(results[0].address_components[2].long_name)
     })
-      .then(latLng => this.props.handleGoogleError("",true))
+      .then(latLng => {
+        this.props.handleGoogleError("",true)
+        this.props.handleAddress(this.state.address)
+      })
       .catch(error =>{
         this.props.handleGoogleError(error,false)
+        this.props.handleAddress("")
       });
   };
  

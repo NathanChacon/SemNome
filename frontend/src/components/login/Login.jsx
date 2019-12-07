@@ -10,9 +10,8 @@ export const Login = (props) =>{
     },[])
     
     return(
-        <section className="section login"> 
+        <section className="l-login"> 
             <a href="http://localhost:8080/auth/facebook" className="btnFace" target='blank'>Entrar Com Facebook</a>
         </section>
-        
     )
 }

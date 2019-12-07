@@ -22,19 +22,6 @@ function App() {
     name:''
   })
 
-  useEffect(() => {
-    console.log('testandp')
-    console.log(process.env.REACT_APP_API_KEY)
-  })
-
-  const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={(props) => (
-      isLogged === true
-        ? <Component {...props} />
-        : <Redirect to='/login' />
-    )} />          
-  )
-
     const verifyToken = () => {
       axios.get('http://localhost:8080/auth/check', {withCredentials: true}).then((res) =>{
         if(!isLogged){
@@ -55,12 +42,14 @@ function App() {
         <Home  isLogged ={isLogged} verifyToken ={verifyToken}></Home>
       </Route>
       <Route exact path='/menu'>
-          <Menu isLogged ={isLogged} verifyToken ={verifyToken} ></Menu>
+          <Menu isLogged ={isLogged} verifyToken ={verifyToken}></Menu>
       </Route>
       <Route path='/login'>
           <Login isLogged ={isLogged} verifyToken ={verifyToken}></Login>
       </Route>
-      <PrivateRoute path='/purchase' component={PurchaseForm} />
+      <Route path='/purchase'>
+          <PurchaseForm isLogged ={isLogged} verifyToken ={verifyToken}></PurchaseForm>
+      </Route>
     </Router>
   );
 }

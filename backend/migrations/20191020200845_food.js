@@ -1,5 +1,5 @@
-exports.up = function(knex) {
-    return knex.schema.createTable('food', function(table) {
+exports.up = async function(knex) {
+    return  await knex.schema.createTableIfNotExists('food', function(table) {
         table.increments('idFood').primary().unsigned()
         table.string('foodName',40).notNull()
         table.string('foodDescription',200)
@@ -10,6 +10,6 @@ exports.up = function(knex) {
     })
 };
 
-exports.down = function(knex) {
-    return knex.schema.dropTableIfExists('food')
+exports.down = async function(knex) {
+    return await knex.schema.dropTableIfExists('food')
 };

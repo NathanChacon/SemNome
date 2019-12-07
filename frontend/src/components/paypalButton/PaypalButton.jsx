@@ -1,18 +1,18 @@
-import React,{useState,useEffect,useRef} from 'react'
+import React,{Component}from 'react'
 import axios from 'axios'
-import { stringify } from 'querystring';
+import {PayPalButton} from 'react-paypal-button-v2'
 
-export default function PaypalButton({product,address}) {
-    const [paidFor, setPaidFor] = useState(false);
-    const [error, setError] = useState(null);
-    const paypalRef = useRef();
-
-
-    useEffect(() => {
-      let items = []
-      let total = 0
-      product.forEach((e) =>{
-           total += e.price * e.quantity
+export default class Example extends Component{
+  
+  constructor(props){
+    super(props)
+    this.total = 0
+    this.items = []
+    this.address = this.props.address
+  }
+  componentDidMount(){  
+      this.props.product.forEach((e) =>{
+           this.total += e.price * e.quantity
            let helper = {
              name:e.foodName,
              description:e.foodDescription,
@@ -23,82 +23,86 @@ export default function PaypalButton({product,address}) {
              },
              quantity: e.quantity
            }
-           items.push(helper)
-      })
+           this.items.push(helper)
+           console.log(this.items)
+  })
 
-      window.paypal
-        .Buttons({
-          createOrder: (data, actions) => {
-            return actions.order.create({
-              purchase_units: [
-                {
-                    reference_id: "PUHF",
-                    description: "Some description",
-    
-                    custom_id: "Something7364",
-                    soft_descriptor: "Great description 1",
-                    amount: {
-                        currency_code: "BRL",
-                        value: total,
-                        breakdown: {
-                            item_total: {
-                                currency_code: "BRL",
-                                value: total
-                            }
-                        }
-                    },
-                    items: items,
-                }
-            ]
-        });
-          },
-          onApprove: function(data, actions) {
+}
+  
+  render() {
+    return (
+      <PayPalButton
+        createOrder={(data, actions) => {
+          return actions.order.create({
+            purchase_units: [
+              {
+                  reference_id: "PUHF",
+                  description: "Some description",
+  
+                  custom_id: "Something7364",
+                  soft_descriptor: "Great description 1",
+                  amount: {
+                      currency_code: "BRL",
+                      value: this.total,
+                      breakdown: {
+                          item_total: {
+                              currency_code: "BRL",
+                              value: this.total
+                          }
+                      }
+                  },
+                  items: this.items,
+              }
+          ]
+      });
+        }}
 
-            // Authorize the transaction
-            actions.order.authorize().then(function(authorization) {
+        onInit ={(data, actions) => {
+
+          // Disable the buttons
+          actions.disable()
+
+          setInterval(() => {
+            if(this.props.address != ''){
+              actions.enable()
+            }else{
+              actions.disable()
+            }
+          },10)
+         
+        }
+      }
+
+        onApprove={(data, actions) => {
+         // Authorize the transaction
+         actions.order.authorize().then((authorization) => {
               
-              // Get the authorization id
-             var authorizationID = authorization.purchase_units[0]
-              .payments.authorizations[0].id
+          // Get the authorization id
+         var authorizationID = authorization.purchase_units[0]
+          .payments.authorizations[0].id
 
-              //call Server
-              axios({
-                method:'POST',
-                withCredentials:true,
-                url:'http://localhost:8080/buy/paypal-transaction-complete',
-                headers:{
-                  'Content-Type': 'application/json'
-                },
-                data:{
-                  orderID: data.orderID,
-                  authorizationID: authorizationID
-                }
-              })
-              .then(_ => {console.log('succes')})
-              .catch(e => {console.log(e)})
-            });
-          },
-          onError: err => {
-            setError(err);
-            console.log('Um erro aconteceu')
-            console.error(err);
-          },
-          locale:'pt_BR',
-          style: {
-            size: 'small',
-            color: 'gold',
-            shape: 'pill',
-          }
-        })
-        .render(paypalRef.current);
-    }, [product.foodName, product.price]);
-
-    
-      return (
-        <div>
-          {error && <div>Uh oh, an error occurred! {error.message}</div>}
-            <div ref={paypalRef} />
-            {console.log(paypalRef)}
-        </div>
-      );
-    }
+        console.log(this.address)
+        const address = this.address
+          //call Server
+          axios({
+            method:'POST',
+            withCredentials:true,
+            url:'http://localhost:8080/buy/paypal-transaction-complete',
+            headers:{
+              'Content-Type': 'application/json'
+            },
+            data:{
+              orderID: data.orderID,
+              authorizationID: authorizationID,
+              address:address
+            }
+          })
+        });
+        }}
+        onClick = {(data,actions) => {
+          
+        }}
+      />
+    );
+  }
+}

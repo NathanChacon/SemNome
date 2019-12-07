@@ -5,6 +5,9 @@ module.exports = {
         return db.select('*').from('category')
     },
     getFoodById: (id) => {
+        return db.select('*').from('food').where('idFood',id)
+    },
+    getFoodByCategoryId: (id) => {
         return db.select('*').from('food').where('idcat',id)
     },
     uploadCategory:(nameCategory,image) =>{
@@ -18,5 +21,17 @@ module.exports = {
     },
     createUser:(userID,name,email) =>{
         return db('user').insert({userID,name,email})
+    },
+    saveTransaction:(orderId,userId,authorizationId) => {
+        return db('transaction').insert({orderId,userId,authorizationId})
+    },
+    saveCaptureID: (captureId,orderId) => {
+        return db('transaction').where({'orderId':orderId}).update({captureId})
+    },
+    lookupAuthorizationID:(orderId) => {
+        return db.select('*').from('transaction').where('orderId',orderId).first()
+    },
+    uploadOrder:() => {
+        
     }
 }

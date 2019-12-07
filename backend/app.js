@@ -39,11 +39,10 @@ app.use(express.static('public'));
 
 
 const authCheck = (req, res, next) => {
-  console.log('Passei por aqui')
   if(req.user){
       next()
   }else{
-      res.send('Você entrar na sua conta para efetuar essa operação').status(400)
+      res.send('Você deve entrar na sua conta para efetuar essa operação').status(400)
   }
 };
 

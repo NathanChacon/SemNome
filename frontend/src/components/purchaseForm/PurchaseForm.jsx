@@ -1,4 +1,5 @@
 import React,{useEffect,useState} from 'react'
+import axios from 'axios'
 import { withRouter,Redirect} from 'react-router-dom';
 import { mask } from './Mask'
 import PaypalButton from '../paypalButton/PaypalButton'
@@ -22,22 +23,27 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
     })
     const [address,setAddress] = useState('')
     const [selectedMethod,setSelectedMethod] = useState('')
+    const [delivery,setDelivery] = useState(true)
+    const [online,setOnline] = useState(false)
     const [inputValue,setInputValue] = useState('')
 
     
+    useEffect(() => {
+        props.verifyToken()
+        if(!props.location.state[0]){
+           props.history.push('/menu')
+        }
+    },[])
 
     useEffect(() =>{
-
         if(inputValue.length == 14){
             verifyCpf()
         }
-
         if(inputValue.length == 18){
             verifyCnpj()
         }
-
     },[inputValue])
-    
+
     const handleSelectedMethod = (event) =>{
         setSelectedMethod(event.target.id)
     }
@@ -66,10 +72,6 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
         setAddress(address)
     }
 
-    const verifyAddress = () => {
-        console.log('oi')
-        console.log(address)
-    }
 
     const handleInput = (e) => {
         if(inputValue.length > 14){
@@ -219,9 +221,11 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
     }
 
     const handleSendOrder = () => {
-            
             if(errors.googleError.status || errors.inputError.status || !selectedMethod){
+                //todo adicionar erro ao botão fazer pedido
                 console.log('preencha as informações corretamente')
+            }else{
+
             }
 
     }
@@ -232,7 +236,7 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
     return(
         
         <section className='l-purchase'>
-            {props.location.state.length === 0 ? <Redirect to='/menu'></Redirect> : <div className='l-purchase-container'>
+            {!props.isLogged ? <Redirect to='/login'></Redirect> : <div className='l-purchase-container'>
                 <div className="m-google-input">
                     <h1>Entregar em</h1>
                     <GoogleLocation handleGoogleError={handleGoogleError} handleAddress = {handleAddress}></GoogleLocation>
@@ -240,8 +244,20 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
                 </div>
                 
                 <div className='l-payment-container'>
-                        <h1>Pagamento</h1>
-                        <div className='m-payment-items'>
+                        <button onClick = {() => {
+                            setDelivery(true)
+                            setOnline(false)
+                        }}>
+                            Pagar Na Entrega
+                        </button>
+                        <button onClick = {() => {
+                             setDelivery(false)
+                             setOnline(true)
+                        }}>
+                            Pagar Online
+                        </button>
+                        {delivery ? 
+                            <div className='m-payment-items'>
                             <button 
                             onClick={(event) => {handleSelectedMethod(event)}} 
                             className={`methods ${selectedMethod == 'MasterCard' ? "is-method-selected" :''}`}
@@ -261,8 +277,8 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
                             <button className='methods' id="ValeRefeicao">
                                 Vale Refeição
                             </button>
-                            <PaypalButton product = {props.location.state} address={address}></PaypalButton>
-                        </div>
+                        </div>  
+                             :<PaypalButton product = {props.location.state} address={address}></PaypalButton>}
                 </div>
                 <div className="l-payment-info">
                     <h1>CPF/CNPJ</h1>

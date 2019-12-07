@@ -48,7 +48,7 @@ export const Navigation = (props) =>{
               <DropdownMenu right>
               <DropdownItem header>Olá {props.user.name ? props.user.name : '' }</DropdownItem>
                 <DropdownItem>
-                    Meus Dados
+                    Pedidos
                 </DropdownItem>
                 <DropdownItem>
                   <a href="http://localhost:8080/auth/logout">Sair</a>
