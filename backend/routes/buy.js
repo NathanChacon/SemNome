@@ -44,7 +44,7 @@ route.post('/paypal-transaction-complete',async (req,res) => {
             .then(() => {console.log('transaction saved with success')})
             .catch(err => res.status(500))
       
-      await createOrder(order,userId,userName,address)
+      await createOrder(order,userId,userName,address,req.body.cpfOrCnpj)
 
        res.send(200);
 
@@ -54,7 +54,6 @@ route.post('/paypal-transaction-complete',async (req,res) => {
 })
 
   const verifyOrders = async (orders,amount) => {
-            
         return new Promise((resolve,reject) => {
               let verifyAmount = 0
               asyncForEach(orders, async (order,index) => {
@@ -106,11 +105,15 @@ route.post('/paypal-transaction-complete',async (req,res) => {
         }
     }
 
-createOrder = async (order,userID,userName,address) => {
+createOrder = async (order,userID,userName,address,cpfOrCnpj) => {
     const amount = order.result.purchase_units[0].amount.value
     const orderDescription = await mountOrder(order)
     const method = 'online'
-
+    DataBase.uploadOrder(userID,cpfOrCnpj,address,method,orderDescription,amount,0).then(e =>{
+      console.log('ok')
+    }).catch((e) => {
+      console.log(e)
+    })
 }
 
 

@@ -83,9 +83,9 @@ const handlePrice = (price,quantity) => {
                         {
                             food ? food.map(element => {
                                 return    <Card className="text-center">
-                                            <CardImg top height="400px"   src={`http://localhost:8080/${element.image}`} alt="Card image cap" />
+                                            <CardImg top height="150px"   src={`http://localhost:8080/${element.image}`} alt="Card image cap" />
                                                 <CardBody style={{
-                                                    height:'150px'
+                                                    height:'160px'
                                                 }}>
                                                     <CardTitle>{element.foodName}</CardTitle>
                                                     <CardSubtitle >R${element.price}</CardSubtitle>
@@ -94,6 +94,7 @@ const handlePrice = (price,quantity) => {
                                                        backgroundColor:'rgba(255, 255, 0, 0.925)',
                                                        color:'black',
                                                        border:'none',
+                                                       width:'100%',
                                                        marginTop:'2%'
                                                    }}
                                                     onClick={() =>{handleConfirmItem(element)}}

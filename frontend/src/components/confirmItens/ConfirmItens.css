@@ -21,13 +21,18 @@
 }
 
 .m-confirm{
-    height: 50vh;
+    height: 300px;
+    width: 400px;
     background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 50%;
+}
+
+.m-confirm ul{
+    margin: 0;
+    padding: 0;
 }
 
 .btn-quantity{

@@ -18,6 +18,9 @@ const buy = require('./routes/buy')
 const sessionConfig = require('./config/sessionConfig')
 const expressSession = require('express-session')
 
+const verifyCpfOrCnpj = require('./helper/verifyCpfOrCnpj')
+const verifyAddress = require('./helper/verifyAddress')
+
 app.use(cors({
    origin:'http://localhost:3000',
    credentials:true
@@ -51,10 +54,11 @@ const authCheck = (req, res, next) => {
 app.use('/food',food)
 app.use('/category',category)
 app.use('/auth',auth)
-app.use('/buy',authCheck,buy)
+app.use('/buy',authCheck,verifyCpfOrCnpj,verifyAddress,buy)
 
 
 
 app.listen(8080,() => {
     console.log('Server rodando')
 })
+

@@ -1,12 +1,11 @@
 import React,{useEffect,useState} from 'react'
 import axios from 'axios'
 import { withRouter,Redirect} from 'react-router-dom';
-import { mask } from './Mask'
 import PaypalButton from '../paypalButton/PaypalButton'
 import './PurchaseForm.css'
 import GoogleLocation from '../googleLocation/GoogleLocation'
+import {InputCpfOrCnpj} from './inputCpfOrCnpj'
  const PurchaseForm = (props) => {
-    
     const [errors,setErrors] = useState({
         googleError:{
             msg:"",
@@ -19,13 +18,16 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
         methodError:{
             msg:"",
             status:true
-        },
+        }
     })
     const [address,setAddress] = useState('')
+    const[addressToVerify,setAddressToVerify] = useState('')
+    const [inputCpfOrCnpjValue,setInputOrCnpjValue] = useState('')
     const [selectedMethod,setSelectedMethod] = useState('')
+    const [paypalErrorAlert,setPaypalErrorAlert] = useState(false)
     const [delivery,setDelivery] = useState(true)
     const [online,setOnline] = useState(false)
-    const [inputValue,setInputValue] = useState('')
+
 
     
     useEffect(() => {
@@ -34,15 +36,6 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
            props.history.push('/menu')
         }
     },[])
-
-    useEffect(() =>{
-        if(inputValue.length == 14){
-            verifyCpf()
-        }
-        if(inputValue.length == 18){
-            verifyCnpj()
-        }
-    },[inputValue])
 
     const handleSelectedMethod = (event) =>{
         setSelectedMethod(event.target.id)
@@ -68,156 +61,27 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
         }
     }
 
-    const handleAddress = (address) => {
+    const handleAddress = (address,results) => {
         setAddress(address)
+        setAddressToVerify(results)
     }
 
-
-    const handleInput = (e) => {
-        if(inputValue.length > 14){
-            setInputValue(mask.CnpjMask(e.target.value))
-        }else{
-            setInputValue(mask.CpfMask(e.target.value))
-        }          
+    const handlePaypalAlert = () => {
+        setPaypalErrorAlert(!paypalErrorAlert)
     }
 
-    const verifyCpf = async () =>{
-
-        let cpfArray = await inputValue.split("")
-
-        let cpfComplete = await cpfArray.filter((e) => {
-            return e != '.' && e != '-' ? e : ''
-        })
-
-        cpfComplete = await cpfComplete.map((e) =>{
-            return parseInt(e)
-        })
-       
-        let cpfNumber = await getCpfToCheck(cpfComplete)
-        
-        const firstDigit = await testDigit( mod11( getSumOfMultiplication( cpfNumber, 10 ) )) 
-        const secondDigit = await testDigit( mod11( getSumOfMultiplication( cpfNumber.concat( firstDigit ), 11 ) ) )
-         
-        if(!isEqual(firstDigit,secondDigit,cpfComplete)){
-            setErrors({
-                ...errors,
-                inputError:{
-                    msg:"Por favor, insira um cpf válido",
-                    status:true
-                }
-            })
-            return
-        }
-
-        if(isRepeatingNumbers(cpfComplete)){
-            setErrors({
-                ...errors,
-                inputError:{
-                    msg:"Por favor, insira um cpf válido",
-                    status:true
-                }
-            })
-            return
-        }
-
+    const handleCpfOrCnpjError = (msg,status) => {
         setErrors({
             ...errors,
             inputError:{
-                msg:"",
-                status:false
+                msg:msg,
+                status:status
             }
         })
     }
 
-    const verifyCnpj = async () => {
-
-        let cnpj = await inputValue.split('')
-        
-         cnpj = await cnpj.filter(e => {
-                return !isNaN(e) ? e : ''
-        })
-
-        cnpj = await cnpj.map(e => {
-            return parseInt(e)
-        })
-
-        let cnpjNumbers = cnpj.slice(0,12)
-
-        let firstDigit = (testDigit(mod11(getCnpjTotal(cnpjNumbers,5))))
-        let secondDigit = (testDigit(mod11(getCnpjTotal(cnpjNumbers.concat(firstDigit),6))))
-
-        if(isRepeatingNumbers(cnpj)){
-            setErrors({
-                    ...errors,
-                    inputError:{
-                        msg:"Por favor, insira um cnpj válido",
-                        status:true
-                    }
-                })
-                return
-        }
-
-        if(isCnpjDigitsEqual(firstDigit,secondDigit,cnpj)){
-                setErrors({
-                    ...errors,
-                    inputError:{
-                        msg:"Por favor, insira um cnpj válido",
-                        status:true
-                    }
-                })
-                return
-        }
-
-        setErrors({
-            ...errors,
-            inputError:{
-                msg:"",
-                status:false
-            }
-        })
-             
-    }
-
-    const getCnpjTotal =  (cnpjValue,mult) => {
-        let sum = 0
-         cnpjValue.forEach(value => {
-            sum += value*mult
-            --mult
-            if(mult < 2){
-                mult = 9
-            }
-        })
-        return sum
-    }
-
-    const isCnpjDigitsEqual = (dgt1,dgt2,cnpjValue) => {
-        if(cnpjValue[12] == dgt1 && cnpjValue[13] == dgt2){
-            return true
-        }else{
-            return false
-        }
-    }
-
-    const getSumOfMultiplication = ( list, total ) => list.reduce( toSumOfMultiplication( total ), 0 )
-    
-    const getCpfToCheck = ( cpf ) => ( cpf.map ) ? cpf.slice( 0, 9 ) : cpf.substr( 0, 9 ).split( '' )
-
-    const toSumOfMultiplication = ( total ) => ( result, num, i ) => result + ( num * total-- )
-    
-    const mod11 = ( num ) => num % 11 
-
-    const testDigit = ( num ) =>  ( num < 2 ) ? 0 : 11 - num
-   
-    const isEqual = (dgt1,dgt2,value) => {
-        if(value[9] == dgt1 && value[10] == dgt2){
-            return true
-        }else{
-            return false
-        }
-    }
-
-    const isRepeatingNumbers = (value) =>{
-             return value.every( ( elem ) => elem === value[0] )
+    const handleCpfOrCnpjValue = (value) => {
+        setInputOrCnpjValue(value)
     }
 
     const handleSendOrder = () => {
@@ -227,12 +91,8 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
             }else{
 
             }
-
     }
        
-        
-
-
     return(
         
         <section className='l-purchase'>
@@ -244,18 +104,21 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
                 </div>
                 
                 <div className='l-payment-container'>
+                       <div className='m-payment-options'>
                         <button onClick = {() => {
-                            setDelivery(true)
-                            setOnline(false)
-                        }}>
-                            Pagar Na Entrega
-                        </button>
-                        <button onClick = {() => {
-                             setDelivery(false)
-                             setOnline(true)
-                        }}>
-                            Pagar Online
-                        </button>
+                                setDelivery(true)
+                                setOnline(false)
+                            }}>
+                                Pagar Na Entrega
+                            </button>
+                            <button onClick = {() => {
+                                setDelivery(false)
+                                setOnline(true)
+                            }}>
+                                Pagar Online
+                            </button>
+                        </div> 
+                       
                         {delivery ? 
                             <div className='m-payment-items'>
                             <button 
@@ -278,20 +141,23 @@ import GoogleLocation from '../googleLocation/GoogleLocation'
                                 Vale Refeição
                             </button>
                         </div>  
-                             :<PaypalButton product = {props.location.state} address={address}></PaypalButton>}
+                             :<PaypalButton product = {props.location.state} address={address} addressToVerify = {addressToVerify} errors = {errors} handlePaypalAlert = {handlePaypalAlert} inputCpfOrCnpjValue ={inputCpfOrCnpjValue}></PaypalButton>}
                 </div>
                 <div className="l-payment-info">
-                    <h1>CPF/CNPJ</h1>
-                    <form>
-                        <input type="text" maxLength="18"  onChange={(e) =>{handleInput(e)}} value={inputValue}></input>
-                        {<p className='error'>{errors.inputError.status ? errors.inputError.msg : ''}</p>}
-                    </form>
+                            <InputCpfOrCnpj handleCpfOrCnpjError = {handleCpfOrCnpjError}  handleCpfOrCnpjValue = {handleCpfOrCnpjValue}></InputCpfOrCnpj>
+                            {<p className='error'>{errors.inputError.status ? errors.inputError.msg : ''}</p>}
                 </div>  
                 <button className="m-btn-default" onClick={() => {handleSendOrder()}}>Fazer Pedido</button>
             </div>
        }
-    </section> 
-            
+            <div className={`l-paypal-alert ${paypalErrorAlert? "is-alert-visible" :"is-alert-hidden"}`}>
+                  <div className="m-paypal-alert-card">
+                        <h3>Atenção</h3>
+                        <p>Você deve preencher todas as informações para prosseguir</p>
+                        <button className="m-btn-default" onClick={() =>{handlePaypalAlert()}}>Entendido</button>
+                  </div>   
+            </div>
+    </section>    
     )
 }
 

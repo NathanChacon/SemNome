@@ -20,6 +20,7 @@ export default class LocationSearchInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = { address: '' };
+    this.state = {results: '' };
   }
   
   handleChange = address => {
@@ -29,59 +30,66 @@ export default class LocationSearchInput extends React.Component {
   };
  
    isPoliticalAreaValid = element =>{
-
-    switch(element){
+    return new Promise((resolve,reject) => {
+      switch(element){
         case 'Brás de Pina':
-        return true
+        return resolve(true)
         break;
 
         case 'Vila da Penha':
-        return true
+          return resolve(true)
         break;
 
         case 'Vicente de Carvalho':
-            return true
+          return resolve(true)
         break;
 
         case 'Cordovil':
-        return true
+          return resolve(true)
         break;
 
         case 'Penha Circular':
-        return true
+          return resolve(true)
         break;
 
         case 'Penha':
-        return true
+          return resolve(true)
         break;
 
         case 'Olaria':
-        return true
+          return resolve(true)
         break;
 
         case 'Ramos':
-        return true
+          return resolve(true)
         break;
 
         default:
-          throw 'Não atendemos nessa região :('
+          return reject('Não atendemos nessa região :( ')
       }
+    })
+   
   }
 
   isAdmAreaValid = (element) => {
-        if(element !== "Rio de Janeiro"){
-          throw 'Não atendemos nessa região :('
-        }else{
-          return true
-        }
+    return new Promise((resolve,reject) => {
+      if(element !== "Rio de Janeiro"){
+        reject('Não atendemos nessa região')
+      }else{
+        return resolve(true)
+      }
+    })
+        
   }
 
-  verifyAdressNumber = (element) => {
-    if(element !== "street_number"){
-        throw 'Insira o numero da residência'
-    }else{
-        return true
-    }
+  verifyAddressNumber = (element) => {
+    return new Promise((resolve,reject) => {
+      if(element !== "street_number"){
+        reject('Insira o numero da residência')
+      }else{
+        resolve(true)
+      }
+    })
   }
    
   onError = (status, clearSuggestions) => {
@@ -93,13 +101,14 @@ export default class LocationSearchInput extends React.Component {
     geocodeByAddress(address)
       .then( async results => {
           this.setState({ address })
-          await this.verifyAdressNumber(results[0].address_components[0].types[0])
+          this.setState({results})
+          await this.verifyAddressNumber(results[0].address_components[0].types[0])
           await this.isAdmAreaValid(results[0].address_components[4].long_name)
           await this.isPoliticalAreaValid(results[0].address_components[2].long_name)
     })
       .then(latLng => {
         this.props.handleGoogleError("",true)
-        this.props.handleAddress(this.state.address)
+        this.props.handleAddress(this.state.address,this.state.results)
       })
       .catch(error =>{
         this.props.handleGoogleError(error,false)

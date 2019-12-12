@@ -9,6 +9,7 @@ export default class Example extends Component{
     this.total = 0
     this.items = []
     this.address = this.props.address
+    this.addressToVerify = this.props.addressToVerify
   }
   componentDidMount(){  
       this.props.product.forEach((e) =>{
@@ -58,20 +59,24 @@ export default class Example extends Component{
         }}
 
         onInit ={(data, actions) => {
-
           // Disable the buttons
           actions.disable()
 
           setInterval(() => {
-            if(this.props.address != ''){
-              actions.enable()
-            }else{
+            if(this.props.errors.googleError.status || this.props.errors.inputError.status){
               actions.disable()
-            }
+            }else{
+              actions.enable()
+          }
           },10)
-         
-        }
       }
+      }
+
+      onClick = {(data,actions) => {
+        if(this.props.errors.googleError.status || this.props.errors.inputError.status){
+            this.props.handlePaypalAlert()
+        }
+      }}
 
         onApprove={(data, actions) => {
          // Authorize the transaction
@@ -81,8 +86,8 @@ export default class Example extends Component{
          var authorizationID = authorization.purchase_units[0]
           .payments.authorizations[0].id
 
-        console.log(this.address)
-        const address = this.address
+        const address = this.addressToVerify
+        const cpfOrCnpj = this.props.inputCpfOrCnpjValue
           //call Server
           axios({
             method:'POST',
@@ -94,13 +99,11 @@ export default class Example extends Component{
             data:{
               orderID: data.orderID,
               authorizationID: authorizationID,
-              address:address
+              address:address,
+              cpfOrCnpj:cpfOrCnpj
             }
           })
         });
-        }}
-        onClick = {(data,actions) => {
-          
         }}
       />
     );
