@@ -24,7 +24,7 @@ export const ConfirmItens = (props) =>{
                   {props.confirmItem ?
                   <ul>
                       <li>{props.confirmItem.foodName}</li>
-                  <li>{'R$' + props.handlePrice(props.confirmItem.price,quantity)}</li>
+                      <li>{'R$' + props.handlePrice(props.confirmItem.price,quantity)}</li>
                       <li>
                           Quantidade:      
                            <button className="btn-quantity" onClick={() =>{handleQuantity('decrase')}}> - </button>

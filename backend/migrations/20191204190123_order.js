@@ -10,6 +10,7 @@ exports.up = async function(knex, Promise) {
         table.decimal('change',14,2).defaultTo(0)
         table.decimal('amount',14,2)
         table.string('status').defaultTo('delivered')
+        table.string('date',14)
     })
 };
 

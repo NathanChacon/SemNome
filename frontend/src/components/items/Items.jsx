@@ -2,7 +2,9 @@ import React,{useEffect,useState} from 'react'
 import './Items.css'
 import { Link } from 'react-router-dom'
 export const Items = (props) =>{
+
     const [extended,setExtended] = useState(false)
+
     const handleSize = () => {
             setExtended(!extended)
     }
@@ -12,7 +14,6 @@ export const Items = (props) =>{
         props.selectedItems.map((e,i) => {
             sum += e.price * e.quantity
         })
-
         return sum
     }
     return(
@@ -28,12 +29,13 @@ export const Items = (props) =>{
                 }):''}
                </ul>
             </div>
-            <div className={`m-items-total ${extended ? "is-show" : 'is-hidden'}`}>
+            <div className={`m-items-total ${extended ? "is-visible" : 'is-hidden'}`}>
                 <span>Total:{handleTotal()}</span>
                 <Link to={{
-                    pathname:'purchase',
-                    state: props.selectedItems
-                }} className='m-btn-default link'>Confirmar</Link>
+                            pathname:'purchase',
+                            state: props.selectedItems
+                        }} className={`m-btn-default link ${props.selectedItems[0] ? 'is-link-visible' : 'is-link-hidden'}`}>Confirmar</Link>
+
             </div>
             
         </div>

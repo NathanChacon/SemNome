@@ -86,7 +86,8 @@ export default class Example extends Component{
          var authorizationID = authorization.purchase_units[0]
           .payments.authorizations[0].id
 
-        const address = this.addressToVerify
+        const fullAddress = this.address
+        const addressToVerify = this.addressToVerify
         const cpfOrCnpj = this.props.inputCpfOrCnpjValue
           //call Server
           axios({
@@ -99,9 +100,15 @@ export default class Example extends Component{
             data:{
               orderID: data.orderID,
               authorizationID: authorizationID,
-              address:address,
+              addressToVerify:addressToVerify,
+              fullAddress:fullAddress,
               cpfOrCnpj:cpfOrCnpj
             }
+          })
+          .then(() => {
+          })
+          .catch((e) => {
+            this.props.handlePaypalError()
           })
         });
         }}

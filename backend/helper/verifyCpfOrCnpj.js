@@ -76,7 +76,7 @@ const verifyCnpj = (cnpj) => {
                reject()
        }
    
-       if(!isCnpjDigitsEqual(firstDigit,secondDigit,cnpjArray)){
+       if(isCnpjDigitsEqual(firstDigit,secondDigit,cnpjArray)){
                reject()
        }
        

@@ -1,5 +1,6 @@
 import React,{useEffect} from 'react'
 import CarouselCard from '../carousel/Carousel'
+import{OwlCarouselComponent} from '../owlCarousel/OwlCarousel'
 
 import './Home.css'
 export const Home = (props) => {
@@ -30,7 +31,7 @@ export const Home = (props) => {
                    </div>
             </section>
             <section className="l-carousel">
-                <CarouselCard></CarouselCard>
+                <OwlCarouselComponent></OwlCarouselComponent>
             </section>
         </React.Fragment>
     )

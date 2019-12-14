@@ -58,8 +58,16 @@
     display: none;
 }
 
-.is-show{
+.is-visible{
     display: flex;
+}
+
+.is-link-hidden{
+    display: none;
+}
+
+.is-link-visible{
+    display: inline-block;
 }
 
 @media (min-width:768px){
@@ -70,7 +78,7 @@
 
     .l-container-items{
         height: 100vh;
-        right: 10px;
+        right: 15px;
         width: 30%;
         top: 7.5%;   
     }

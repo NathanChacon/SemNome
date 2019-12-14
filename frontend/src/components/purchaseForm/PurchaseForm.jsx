@@ -25,6 +25,7 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
     const [inputCpfOrCnpjValue,setInputOrCnpjValue] = useState('')
     const [selectedMethod,setSelectedMethod] = useState('')
     const [paypalErrorAlert,setPaypalErrorAlert] = useState(false)
+    const [paypalErrorFromServer,setPaypalErrorFromServer] = useState(false)
     const [delivery,setDelivery] = useState(true)
     const [online,setOnline] = useState(false)
 
@@ -32,9 +33,6 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
     
     useEffect(() => {
         props.verifyToken()
-        if(!props.location.state[0]){
-           props.history.push('/menu')
-        }
     },[])
 
     const handleSelectedMethod = (event) =>{
@@ -68,6 +66,9 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
 
     const handlePaypalAlert = () => {
         setPaypalErrorAlert(!paypalErrorAlert)
+        if(paypalErrorFromServer){
+            setPaypalErrorFromServer(!paypalErrorFromServer)
+        }
     }
 
     const handleCpfOrCnpjError = (msg,status) => {
@@ -82,6 +83,11 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
 
     const handleCpfOrCnpjValue = (value) => {
         setInputOrCnpjValue(value)
+    }
+
+    const handlePaypalError = () => {
+        setPaypalErrorFromServer(true)
+        setPaypalErrorAlert(true)
     }
 
     const handleSendOrder = () => {
@@ -141,7 +147,14 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
                                 Vale Refeição
                             </button>
                         </div>  
-                             :<PaypalButton product = {props.location.state} address={address} addressToVerify = {addressToVerify} errors = {errors} handlePaypalAlert = {handlePaypalAlert} inputCpfOrCnpjValue ={inputCpfOrCnpjValue}></PaypalButton>}
+                             :<PaypalButton
+                              product = {props.location.state} 
+                              address={address} addressToVerify = {addressToVerify} 
+                              errors = {errors} handlePaypalAlert = {handlePaypalAlert} 
+                              inputCpfOrCnpjValue ={inputCpfOrCnpjValue}
+                              handlePaypalError = {handlePaypalError}
+                              >
+                              </PaypalButton>}
                 </div>
                 <div className="l-payment-info">
                             <InputCpfOrCnpj handleCpfOrCnpjError = {handleCpfOrCnpjError}  handleCpfOrCnpjValue = {handleCpfOrCnpjValue}></InputCpfOrCnpj>
@@ -151,11 +164,19 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
             </div>
        }
             <div className={`l-paypal-alert ${paypalErrorAlert? "is-alert-visible" :"is-alert-hidden"}`}>
-                  <div className="m-paypal-alert-card">
-                        <h3>Atenção</h3>
-                        <p>Você deve preencher todas as informações para prosseguir</p>
-                        <button className="m-btn-default" onClick={() =>{handlePaypalAlert()}}>Entendido</button>
-                  </div>   
+                  {  paypalErrorFromServer?  
+                      <div className="m-paypal-alert-card">
+                          <h3>Atenção</h3>
+                          <p>Ocorreu um erro durante a compra,verifique se os dados foram preenchidos corretamente</p>
+                          <button className="m-btn-default" onClick={() =>{handlePaypalAlert()}}>Entendido</button>
+                      </div>
+                      :
+                        <div className="m-paypal-alert-card">
+                            <h3>Atenção</h3>
+                            <p>Você deve preencher todas as informações para prosseguir</p>
+                            <button className="m-btn-default" onClick={() =>{handlePaypalAlert()}}>Entendido</button>
+                      </div>
+                  }
             </div>
     </section>    
     )
