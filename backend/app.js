@@ -14,6 +14,7 @@ const category = require('./routes/categoryRoute')
 const food = require('./routes/foodRoute')
 const auth = require('./routes/auth')
 const buy = require('./routes/buy')
+const order = require('./routes/order')
 
 const sessionConfig = require('./config/sessionConfig')
 const expressSession = require('express-session')
@@ -55,10 +56,12 @@ app.use('/food',food)
 app.use('/category',category)
 app.use('/auth',auth)
 app.use('/buy',authCheck,verifyCpfOrCnpj,verifyAddress,buy)
+app.use('/order',order)
 
 
 
 app.listen(8080,() => {
     console.log('Server rodando')
 })
+
 

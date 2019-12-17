@@ -1,4 +1,5 @@
 
+
 const db = require('./db')
 module.exports = {
     getCategorys: () => {
@@ -10,11 +11,17 @@ module.exports = {
     getFoodByCategoryId: (id) => {
         return db.select('*').from('food').where('idcat',id)
     },
+    getAllOrders: () => {
+        return db.select('orderId','userName','cpfOrCnpj','address','method','description','change','amount','status','date').from('order')
+    },
     uploadCategory:(nameCategory,image) =>{
         return db('category').insert({nameCategory,image})
     },
     uploadFood:(foodName,foodDescription,image,price,idcat) =>{
         return db('food').insert({foodName,foodDescription,image,price,idcat})
+    },
+    uploadOrder:(userId,userName,cpfOrCnpj,address,method,description,amount,change,date) => {
+        return db('order').insert({userId,userName,cpfOrCnpj,address,method,description,amount,change,date})
     },
     findUser:(userID) =>{
         return db.select('*').from('user').where('userID',userID).first()
@@ -31,7 +38,7 @@ module.exports = {
     lookupAuthorizationID:(orderId) => {
         return db.select('*').from('transaction').where('orderId',orderId).first()
     },
-    uploadOrder:() => {
-        
+    updateOrderStatus:(orderId,status) => {
+        return db('order').where({orderId}).update({status})
     }
 }

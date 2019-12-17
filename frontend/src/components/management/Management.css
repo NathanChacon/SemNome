@@ -1,0 +1,55 @@
+.l-management{
+    height: 100vh;
+    width: 100%;
+    padding-top: 75px;
+}
+
+.m-management-nav{
+    position: absolute;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    left: 0;
+    height: 100vh;
+    width: 400px;
+    background-color: rgb(255, 255, 255);
+}
+
+.m-display-managementItems{
+    margin-left: 406px;
+    height: 100vh;
+}
+
+.m-management-nav header{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.m-management-nav ul{
+    padding: 0;
+    margin: 0;
+}
+
+.m-management-nav ul li{
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.m-management-nav ul li:hover{
+    cursor: pointer;
+    background-color: rgba(255, 255, 0, 0.925)
+}
+
+.management-component-header{
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.m-orders-container{
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.m-table-order{
+    text-align: center;
+    overflow-x: auto;
+}

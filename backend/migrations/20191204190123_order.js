@@ -1,8 +1,10 @@
 
+
 exports.up = async function(knex, Promise) {
     return await knex.schema.createTableIfNotExists('order',function(table){
         table.increments('orderId').primary().unsigned()
         table.string('userId')
+        table.string('userName')
         table.string('cpfOrCnpj')
         table.string('address')
         table.string('method')

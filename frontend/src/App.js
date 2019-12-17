@@ -11,6 +11,7 @@ import {Navigation} from './components/nav/Nav'
 import {Home} from './components/home/Home'
 import {Menu} from './components/menu/Menu'
 import {Login} from './components/login/Login'
+import {Management} from './components/management/Management'
 import PurchaseForm from './components/purchaseForm/PurchaseForm'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -19,15 +20,16 @@ function App() {
 
   const [isLogged,setIsLogged] = useState(false)
   const[user,setUser] = useState({
-    name:''
+    name:'',
+    role:''
   })
 
-    const verifyToken = () => {
+  const verifyToken = () => {
       axios.get('http://localhost:8080/auth/check', {withCredentials: true}).then((res) =>{
         if(!isLogged){
           setIsLogged(true)
         } 
-        setUser({name:res.data.userName})
+        setUser({name:res.data.userName,role:res.data.userRole})
       }).catch(e =>{
         setIsLogged(false)
         setUser(null)
@@ -44,11 +46,14 @@ function App() {
       <Route exact path='/menu'>
           <Menu isLogged ={isLogged} verifyToken ={verifyToken}></Menu>
       </Route>
-      <Route path='/login'>
+      <Route exact path='/login'>
           <Login isLogged ={isLogged} verifyToken ={verifyToken}></Login>
       </Route>
-      <Route path='/purchase'>
+      <Route exact path='/purchase'>
           <PurchaseForm isLogged ={isLogged} verifyToken ={verifyToken}></PurchaseForm>
+      </Route>
+      <Route exact path='/management'>
+          <Management></Management>
       </Route>
     </Router>
   );

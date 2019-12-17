@@ -50,6 +50,12 @@ export const Navigation = (props) =>{
                 <DropdownItem>
                     Pedidos
                 </DropdownItem>
+                {props.user.role === 'manager' ? 
+                    <DropdownItem>
+                       <NavLink href="/management" style={{color:'black',padding:'0'}}>Gerenciar</NavLink>
+                    </DropdownItem>
+                    :''
+                }
                 <DropdownItem>
                   <a href="http://localhost:8080/auth/logout">Sair</a>
                 </DropdownItem>

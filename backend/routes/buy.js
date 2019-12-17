@@ -46,12 +46,15 @@ route.post('/paypal-transaction-complete',async (req,res) => {
             .then(() => {console.log('transaction saved with success')})
             .catch(err => res.status(500))
       
-      await createOrder(order,userId,userName,address,req.body.cpfOrCnpj,date)
-       
+      try{
+         await createOrder(order,userId,userName,address,req.body.cpfOrCnpj,date)
+      }catch(e){
+        return res.send('Ops! Ocorreu um erro no servidor, por favor tente mais tarde :(').status(500)
+      }
+      
       res.send(200);
-
       await captureAuthorization(orderID,req.body.authorizationID)
-       res.end();
+      res.end();
 })
 
   const verifyOrders = async (orders,amount) => {
@@ -101,7 +104,7 @@ const createOrder = (order,userID,userName,address,cpfOrCnpj,date) => {
       const amount = order.result.purchase_units[0].amount.value
       const orderDescription = await mountOrder(order)
       const method = 'online'
-      DataBase.uploadOrder(userID,cpfOrCnpj,address,method,orderDescription,amount,0,date).then(e =>{
+      DataBase.uploadOrder(userID,userName,cpfOrCnpj,address,method,orderDescription,amount,0,date).then(e =>{
           resolve()
       }).catch((e) => {
           reject(e)
@@ -113,8 +116,12 @@ const mountOrder = (order) => {
     return new Promise((resolve,reject) => {
       let verifyIfEnd
       let  description = order.result.purchase_units[0].items.reduce((description,item,index) => {
-        verifyIfEnd = index
-        return description + "|" + item.quantity + " " + item.name
+      verifyIfEnd = index
+      if(index === 0){
+        return  description + " " + item.quantity + " " + item.name 
+      }else{
+        return  description + "|" + item.quantity + " " + item.name 
+      }  
     },'')
     if(verifyIfEnd == order.result.purchase_units[0].items.length - 1){
        resolve(description)
