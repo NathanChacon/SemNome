@@ -20,6 +20,7 @@ route.get('/logout',(req,res) => {
 })
 
 const authCheck = (req, res, next) => {
+    console.log(req.user)
     if(req.user){
         next()
     }else{
@@ -31,7 +32,8 @@ const authCheck = (req, res, next) => {
     res.status(200).json({
       authenticated: true,
       message: "user successfully authenticated",
-      userName: req.user.name
+      userName: req.user.name,
+      userRole: req.user.role
     });
   });
 

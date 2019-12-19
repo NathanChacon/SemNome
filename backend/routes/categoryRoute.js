@@ -16,9 +16,9 @@ route.get('/all',(req,res,next) =>{
 
 route.post('/uploadCategory',storeFile,(req,res,next) => {
     DataBase.uploadCategory(req.body.categoryName,req.imgPath).then(() =>{
-        res.send('Categoria criada com sucesso').status(200)
+        res.status(200).send('Categoria criada com sucesso')
     }).catch(e =>{
-        res.send('Erro no servidor').status(500)
+        res.status(500).send('Erro no servidor')
     })
 })
 

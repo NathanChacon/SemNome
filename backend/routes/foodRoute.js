@@ -10,17 +10,17 @@ route.post("/uploadFood",storeFile,async (req,res,next) => {
         const idcat = await parseInt(req.body.idcat)
 
         DataBase.uploadFood(req.body.foodName,req.body.foodDescription,req.imgPath,price,idcat).then(() =>{
-            res.send('Comida criada com sucesso').status(200)
+            res.status(200).send('Comida criada com sucesso')
         }).catch(e =>{
             console.log(e)
-            res.send('Erro no servidor').status(500)
+            res.status(500).send('Erro no servidor')
         })
 })
 
 
 
 route.get('/:id',(req,res,nex) => {
-         DataBase.getFoodById(req.params.id).then((food) =>{
+         DataBase.getFoodByCategoryId(req.params.id).then((food) =>{
                 res.json({
                     food
                 })

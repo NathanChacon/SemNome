@@ -1,9 +1,10 @@
 import React,{useState,useEffect} from 'react'
-import { Table } from 'reactstrap';
 import axios from 'axios'
-
+import './orders.css'
 export const Orders= (props) => {
     const [orders,setOrder] = useState(false)
+    
+
     useEffect(() => {
         getOrders()
         setInterval(() => {
@@ -15,7 +16,7 @@ export const Orders= (props) => {
             axios({
                 method: 'GET',
                 withCredentials:true,
-                url:'http://localhost:8080/order/all'
+                url:'http://localhost:8080/manager/allOrders'
             })
             .then((response) => {
                 setOrder(response.data.orders)
@@ -25,7 +26,7 @@ export const Orders= (props) => {
     const changeOrderStatus = (orderId,status) => {
         axios({
             method:'PUT',
-            url:'http://localhost:8080/order/status',
+            url:'http://localhost:8080/manager/orderStatus',
             withCredentials:true,
             data:{
                   orderId:orderId,
@@ -38,12 +39,12 @@ export const Orders= (props) => {
     }
 
     return(
-        <div className="m-orders-container">
+            <React.Fragment>
             <header className="management-component-header">
                 <h3>Pedidos</h3>
             </header>
-            <Table className="mt-2 m-table-order" size="sm" hover>
-                <thead className="text-center">
+           <table className="l-order-table">
+                <thead>
                     <tr>
                         <th>Nome Usuário</th>
                         <th>Endereço</th>
@@ -55,7 +56,7 @@ export const Orders= (props) => {
                         <th>Gerenciamento</th>
                     </tr>
                 </thead>
-                <tbody className="text-center">
+                <tbody>
                     {
                         orders ? orders.map((order) => {
                             return <tr scope="row">
@@ -81,7 +82,7 @@ export const Orders= (props) => {
                     }):''
                 }
             </tbody>
-        </Table>
-    </div>
+        </table>
+    </React.Fragment>
     )
 }

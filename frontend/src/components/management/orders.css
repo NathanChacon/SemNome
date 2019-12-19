@@ -1,0 +1,26 @@
+.l-order-table{
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.8em;
+    min-width: 300px;
+    border-radius: 5px 5px 0 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.l-order-table thead tr{
+    background-color: rgba(12, 105, 245, 0.815);
+    color: white;
+    text-align: left;
+    font-weight: bold;
+}
+
+.l-order-table th,
+.l-order-table td{
+    padding: 12px 15px;
+}
+
+.l-order-table tbody tr{
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}

@@ -1,39 +1,40 @@
 .l-management{
     height: 100vh;
     width: 100%;
-    padding-top: 75px;
+    padding-top: 74px;
 }
 
-.m-management-nav{
+.l-management-nav{
     position: absolute;
     text-align: center;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    left: 0;
-    height: 100vh;
+    left: 0px;
     width: 400px;
+    height: calc(100vh - 74px);
+    transition: all 1s;
     background-color: rgb(255, 255, 255);
 }
 
 .m-display-managementItems{
     margin-left: 406px;
-    height: 100vh;
+    height: calc(100vh - 74px);
+    overflow: auto;
 }
 
-.m-management-nav header{
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+.l-management-nav header{
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.m-management-nav ul{
+.l-management-nav ul{
     padding: 0;
     margin: 0;
 }
 
-.m-management-nav ul li{
+.l-management-nav ul li{
     padding: 10px;
     margin-bottom: 10px;
 }
 
-.m-management-nav ul li:hover{
+.l-management-nav ul li:hover{
     cursor: pointer;
     background-color: rgba(255, 255, 0, 0.925)
 }
@@ -43,13 +44,48 @@
     text-align: center;
 }
 
-.m-orders-container{
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
+
+.management-nav-arrow{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 100%;
+    width: 30px;
+    background-color: rgb(238, 238, 238);
+    display: none;
 }
 
-.m-table-order{
-    text-align: center;
-    overflow-x: auto;
+.management-nav-arrow:hover{
+    cursor: pointer;
+}
+
+
+@media (max-width: 1440px){
+
+    .l-management{
+        padding-top: 60px;
+    }
+    .l-management-nav{
+        height: calc(100vh - 60px);
+    }
+    .m-display-managementItems{
+        height: calc(100vh - 60px);
+    }
+    .is-managemente-nav-visible{
+        left: 0px;
+    }
+
+    .is-managemente-nav-hidden{
+        left: -370px;
+    }
+
+    .m-display-managementItems{
+        margin-left: 30px;
+    }
+
+    .management-nav-arrow{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }

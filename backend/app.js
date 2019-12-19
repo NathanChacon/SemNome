@@ -14,13 +14,14 @@ const category = require('./routes/categoryRoute')
 const food = require('./routes/foodRoute')
 const auth = require('./routes/auth')
 const buy = require('./routes/buy')
-const order = require('./routes/order')
+const manager = require('./routes/manager')
 
 const sessionConfig = require('./config/sessionConfig')
 const expressSession = require('express-session')
 
 const verifyCpfOrCnpj = require('./helper/verifyCpfOrCnpj')
 const verifyAddress = require('./helper/verifyAddress')
+const verifyIfIsManager = require('./helper/verifyIfIsManager')
 
 app.use(cors({
    origin:'http://localhost:3000',
@@ -56,7 +57,7 @@ app.use('/food',food)
 app.use('/category',category)
 app.use('/auth',auth)
 app.use('/buy',authCheck,verifyCpfOrCnpj,verifyAddress,buy)
-app.use('/order',order)
+app.use('/manager',verifyIfIsManager,manager)
 
 
 

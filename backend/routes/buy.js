@@ -31,14 +31,14 @@ route.post('/paypal-transaction-complete',async (req,res) => {
       } catch (err) {
         // 4. Handle any errors from the call
         console.error(err);
-        return res.send(500);
+        return res.status(500).send();
       }
 
       try{
           await verifyOrders(order.result.purchase_units[0].items,order.result.purchase_units[0].amount.value)
       }catch(err){
             console.log(err)
-            return res.send('Pedido invalido').status(400)
+            return res.status(400).send('Pedido invalido')
       }
         
       //save transaction orderID
@@ -49,10 +49,10 @@ route.post('/paypal-transaction-complete',async (req,res) => {
       try{
          await createOrder(order,userId,userName,address,req.body.cpfOrCnpj,date)
       }catch(e){
-        return res.send('Ops! Ocorreu um erro no servidor, por favor tente mais tarde :(').status(500)
+        return res.status(500).send('Ops! Ocorreu um erro no servidor, por favor tente mais tarde :(')
       }
       
-      res.send(200);
+      res.status(200).send();
       await captureAuthorization(orderID,req.body.authorizationID)
       res.end();
 })

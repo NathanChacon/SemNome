@@ -4,9 +4,9 @@ const DataBase = require('../api/database')
 route.get('/all',(req,res,next) => {
         DataBase.getAllOrders()
         .then((orders) => {
-            return res.send({
+            return res.status(200).send({
                 orders
-            }).status(200)
+            })
         })
         .catch((e) => {
           return  res.status(400)
@@ -18,7 +18,7 @@ route.put('/status',(req,res,next) => {
     const orderId = req.body.orderId
     DataBase.updateOrderStatus(orderId,status)
     .then(() =>{
-      return res.send('ok').status(200)
+      return res.status(200).send('ok')
     })
     .catch((e) => {
       console.log(e)

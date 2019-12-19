@@ -7,17 +7,16 @@ import axios from 'axios'
   Route,
   useParams
 } from "react-router-dom";
-import {Navigation} from './components/nav/Nav'
+import Navigation from './components/nav/Nav'
 import {Home} from './components/home/Home'
 import {Menu} from './components/menu/Menu'
 import {Login} from './components/login/Login'
-import {Management} from './components/management/Management'
+import Management from './components/management/Management'
 import PurchaseForm from './components/purchaseForm/PurchaseForm'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-
   const [isLogged,setIsLogged] = useState(false)
   const[user,setUser] = useState({
     name:'',
