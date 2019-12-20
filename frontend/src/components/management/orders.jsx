@@ -39,10 +39,7 @@ export const Orders= (props) => {
     }
 
     return(
-            <React.Fragment>
-            <header className="management-component-header">
-                <h3>Pedidos</h3>
-            </header>
+        <React.Fragment>
            <table className="l-order-table">
                 <thead>
                     <tr>
@@ -67,14 +64,14 @@ export const Orders= (props) => {
                                       <td>{order.change}</td>
                                       <td>{order.method}</td>
                                       <td>{order.date}</td>
-                                      <td className="btn-group">
-                                          <button className="btn btn-warning" onClick ={() => {
+                                      <td className="buttons-table-order">
+                                          <button className="btn-warning" onClick ={() => {
                                               changeOrderStatus(order.orderId,'preparing')
                                           }}>Preparando</button>
-                                          <button className="btn btn-success" onClick ={() => {
+                                          <button className="btn-success" onClick ={() => {
                                               changeOrderStatus(order.orderId,'ready')
                                           }}>Pronto</button>
-                                          <button className="btn btn-danger" onClick ={() => {
+                                          <button className="btn-danger" onClick ={() => {
                                               changeOrderStatus(order.orderId,'finish')
                                           }}>Finalizado</button>
                                       </td>

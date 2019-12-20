@@ -83,7 +83,7 @@ const handlePrice = (price,quantity) => {
                         {
                             food ? food.map(element => {
                                 return    <Card className="text-center">
-                                            <CardImg top height="150px"   src={`http://localhost:8080/${element.image}`} alt="Card image cap" />
+                                            <CardImg top height="200px"  src={`http://localhost:8080/${element.image}`} alt="Card image cap" />
                                                 <CardBody style={{
                                                     height:'160px'
                                                 }}>

@@ -1,12 +1,14 @@
+th,td{
+    font-size: 0.8em;
+}
+
 .l-order-table{
     border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 0.8em;
-    min-width: 300px;
+    min-width: 400px;
     border-radius: 5px 5px 0 0;
-    width: 100%;
+    width: 1480px;
     height: 100%;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .l-order-table thead tr{
@@ -23,4 +25,12 @@
 
 .l-order-table tbody tr{
     border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+
+.buttons-table-order button{
+    margin-bottom: 4px;
+    padding:5px;
+    width: 100px;
+    display: block;
 }

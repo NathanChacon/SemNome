@@ -5,6 +5,7 @@ import PaypalButton from '../paypalButton/PaypalButton'
 import './PurchaseForm.css'
 import GoogleLocation from '../googleLocation/GoogleLocation'
 import {InputCpfOrCnpj} from './inputCpfOrCnpj'
+
  const PurchaseForm = (props) => {
     const [errors,setErrors] = useState({
         googleError:{
@@ -20,12 +21,12 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
             status:true
         }
     })
+    const methodsNames = ['Dinheiro','Débito-Visa','Crédito-American Exp','Crédito-Mastercard','Crédito-Goodcard','Vale-Sodexo','Vale-VrRefeição','DébitoElo']
     const [address,setAddress] = useState('')
     const[addressToVerify,setAddressToVerify] = useState('')
     const [inputCpfOrCnpjValue,setInputOrCnpjValue] = useState('')
     const [selectedMethod,setSelectedMethod] = useState('')
-    const [paypalErrorAlert,setPaypalErrorAlert] = useState(false)
-    const [paypalErrorFromServer,setPaypalErrorFromServer] = useState(false)
+    const [errorAlert,setErrorAlert] = useState(false)
     const [delivery,setDelivery] = useState(true)
     const [online,setOnline] = useState(false)
 
@@ -35,8 +36,8 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
         props.verifyToken()
     },[])
 
-    const handleSelectedMethod = (event) =>{
-        setSelectedMethod(event.target.id)
+    const handleSelectedMethod = (name) =>{
+        setSelectedMethod(name)
     }
 
     const handleGoogleError = (error,isCorrect) => {
@@ -64,12 +65,7 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
         setAddressToVerify(results)
     }
 
-    const handlePaypalAlert = () => {
-        setPaypalErrorAlert(!paypalErrorAlert)
-        if(paypalErrorFromServer){
-            setPaypalErrorFromServer(!paypalErrorFromServer)
-        }
-    }
+
 
     const handleCpfOrCnpjError = (msg,status) => {
         setErrors({
@@ -85,17 +81,21 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
         setInputOrCnpjValue(value)
     }
 
-    const handlePaypalError = () => {
-        setPaypalErrorFromServer(true)
-        setPaypalErrorAlert(true)
+    const handleErrorAlert = () => {
+        setErrorAlert(!errorAlert)
     }
 
     const handleSendOrder = () => {
             if(errors.googleError.status || errors.inputError.status || !selectedMethod){
-                //todo adicionar erro ao botão fazer pedido
-                console.log('preencha as informações corretamente')
-            }else{
-
+                handleErrorAlert()
+            }
+            else{
+                //props.location.state
+                //address
+                //addressToVerify
+                //method
+                //inputCpfOrCnpjValue
+                //reaproveitar codigo
             }
     }
        
@@ -127,56 +127,36 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
                        
                         {delivery ? 
                             <div className='m-payment-items'>
-                            <button 
-                            onClick={(event) => {handleSelectedMethod(event)}} 
-                            className={`methods ${selectedMethod == 'MasterCard' ? "is-method-selected" :''}`}
-                            id="MasterCard"
-                            >
-                                MasterCard
-                            </button>
-                            <button className='methods' 
-                            onClick={(event) => {handleSelectedMethod(event)}} 
-                            className={`methods ${selectedMethod == 'Visa' ? "is-method-selected" :''}`}
-                            id="Visa">
-                                Visa
-                            </button>
-                            <button className='methods' id="CredCard">
-                                CredCard
-                            </button>
-                            <button className='methods' id="ValeRefeicao">
-                                Vale Refeição
-                            </button>
-                        </div>  
+                                {methodsNames.map((name) => {
+                                return <button id={name} className={`methods ${selectedMethod == name ? "is-method-selected" :''}`}
+                                       onClick={(e) => {handleSelectedMethod(name)}}>
+                                            {name}
+                                        </button>
+                                })}
+                            </div>  
                              :<PaypalButton
                               product = {props.location.state} 
                               address={address} addressToVerify = {addressToVerify} 
-                              errors = {errors} handlePaypalAlert = {handlePaypalAlert} 
+                              errors = {errors} 
                               inputCpfOrCnpjValue ={inputCpfOrCnpjValue}
-                              handlePaypalError = {handlePaypalError}
+                              handleErrorAlert = {handleErrorAlert}
                               >
                               </PaypalButton>}
                 </div>
                 <div className="l-payment-info">
                             <InputCpfOrCnpj handleCpfOrCnpjError = {handleCpfOrCnpjError}  handleCpfOrCnpjValue = {handleCpfOrCnpjValue}></InputCpfOrCnpj>
                             {<p className='error'>{errors.inputError.status ? errors.inputError.msg : ''}</p>}
-                </div>  
-                <button className="m-btn-default" onClick={() => {handleSendOrder()}}>Fazer Pedido</button>
+                </div>
+                {delivery ?<button className="m-btn-default" onClick={() => {handleSendOrder()}}>Fazer Pedido</button>: '' }  
+                
             </div>
        }
-            <div className={`l-paypal-alert ${paypalErrorAlert? "is-alert-visible" :"is-alert-hidden"}`}>
-                  {  paypalErrorFromServer?  
-                      <div className="m-paypal-alert-card">
-                          <h3>Atenção</h3>
-                          <p>Ocorreu um erro durante a compra,verifique se os dados foram preenchidos corretamente</p>
-                          <button className="m-btn-default" onClick={() =>{handlePaypalAlert()}}>Entendido</button>
-                      </div>
-                      :
-                        <div className="m-paypal-alert-card">
-                            <h3>Atenção</h3>
-                            <p>Você deve preencher todas as informações para prosseguir</p>
-                            <button className="m-btn-default" onClick={() =>{handlePaypalAlert()}}>Entendido</button>
-                      </div>
-                  }
+            <div className={`m-error-alert ${errorAlert ? "is-alert-visible" :"is-alert-hidden"}`}>
+                <div className="m-error-card">
+                    <h3>Atenção</h3>
+                    <p>Você deve preencher todas as informações para prosseguir</p>
+                    <button className="m-btn-default" onClick={() =>{handleErrorAlert()}}>Entendido</button>
+                </div>
             </div>
     </section>    
     )

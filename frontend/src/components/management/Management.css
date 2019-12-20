@@ -2,11 +2,13 @@
     height: 100vh;
     width: 100%;
     padding-top: 74px;
+    overflow: hidden;
 }
 
 .l-management-nav{
     position: absolute;
     text-align: center;
+    border-right: 1px solid rgba(0, 0, 0, 0.2); ;
     left: 0px;
     width: 400px;
     height: calc(100vh - 74px);
@@ -21,7 +23,8 @@
 }
 
 .l-management-nav header{
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .l-management-nav ul{
@@ -51,7 +54,7 @@
     right: 0px;
     height: 100%;
     width: 30px;
-    background-color: rgb(238, 238, 238);
+    background-color: rgba(247, 255, 130, 0.925);
     display: none;
 }
 
@@ -67,9 +70,11 @@
     }
     .l-management-nav{
         height: calc(100vh - 60px);
+        border-right: none;
     }
     .m-display-managementItems{
         height: calc(100vh - 60px);
+        margin-left: 30px;
     }
     .is-managemente-nav-visible{
         left: 0px;
@@ -79,9 +84,6 @@
         left: -370px;
     }
 
-    .m-display-managementItems{
-        margin-left: 30px;
-    }
 
     .management-nav-arrow{
         display: flex;
