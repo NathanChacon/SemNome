@@ -11,6 +11,7 @@ import Navigation from './components/nav/Nav'
 import {Home} from './components/home/Home'
 import {Menu} from './components/menu/Menu'
 import {Login} from './components/login/Login'
+import {ClientOrders} from './components/clientOrders/ClientOrders'
 import Management from './components/management/Management'
 import PurchaseForm from './components/purchaseForm/PurchaseForm'
 import './App.css';
@@ -51,6 +52,9 @@ function App() {
       <Route exact path='/purchase'>
           <PurchaseForm isLogged ={isLogged} verifyToken ={verifyToken}></PurchaseForm>
       </Route>
+      <Route exact path='/clientOrders'>
+          <ClientOrders></ClientOrders>
+      </Route>
       <Route exact path='/management'>
           <Management></Management>
       </Route>
@@ -59,3 +63,4 @@ function App() {
 }
 
 export default App;
+

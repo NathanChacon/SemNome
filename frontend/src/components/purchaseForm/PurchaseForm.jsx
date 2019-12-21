@@ -90,12 +90,39 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
                 handleErrorAlert()
             }
             else{
-                //props.location.state
-                //address
-                //addressToVerify
-                //method
-                //inputCpfOrCnpjValue
-                //reaproveitar codigo
+                let total = 0
+                let items = []
+               props.location.state.forEach((e) =>{
+                    total += e.price * e.quantity
+                    let helper = {
+                      name:e.foodName,
+                      description:e.foodDescription,
+                      sku:e.idFood,
+                      unit_amount:{
+                        currency_code:"BRL",
+                        value: e.price
+                      },
+                      quantity: e.quantity
+                    }
+                    items.push(helper)
+           })
+         
+                axios({
+                    method:'POST',
+                    withCredentials:true,
+                    url:'http://localhost:8080/buy/delivery/',
+                    headers:{
+                      'Content-Type': 'application/json'
+                    },
+                    data:{
+                        addressToVerify:addressToVerify,
+                        fullAddress:address,
+                        cpfOrCnpj:inputCpfOrCnpjValue,
+                        items: items,
+                        amount: total,
+                        method: selectedMethod
+                      }
+                })
             }
     }
        
@@ -136,7 +163,8 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
                             </div>  
                              :<PaypalButton
                               product = {props.location.state} 
-                              address={address} addressToVerify = {addressToVerify} 
+                              address={address}
+                              addressToVerify = {addressToVerify} 
                               errors = {errors} 
                               inputCpfOrCnpjValue ={inputCpfOrCnpjValue}
                               handleErrorAlert = {handleErrorAlert}

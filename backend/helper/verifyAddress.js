@@ -1,4 +1,5 @@
  const verifyAddress = async (req,res,next) => {
+
     if(!req.body.addressToVerify){
         return res.status(400).send('Preencha o endereço corretamente')
     }

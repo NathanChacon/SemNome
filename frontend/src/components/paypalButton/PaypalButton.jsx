@@ -74,7 +74,7 @@ export default class Example extends Component{
 
       onClick = {(data,actions) => {
         if(this.props.errors.googleError.status || this.props.errors.inputError.status){
-            this.props.handlePaypalAlert()
+            this.props.handleErrorAlert()
         }
       }}
 
@@ -93,7 +93,7 @@ export default class Example extends Component{
           axios({
             method:'POST',
             withCredentials:true,
-            url:'http://localhost:8080/buy/paypal-transaction-complete',
+            url:'http://localhost:8080/buy/online/paypal-transaction-complete',
             headers:{
               'Content-Type': 'application/json'
             },
@@ -108,7 +108,7 @@ export default class Example extends Component{
           .then(() => {
           })
           .catch((e) => {
-            this.props.handlePaypalError()
+            this.props.handleErrorAlert()
           })
         });
         }}

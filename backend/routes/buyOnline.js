@@ -1,6 +1,7 @@
 const route = require('express').Router()
 const paypal = require('@paypal/checkout-server-sdk');
 const paypalConfig = require('../config/paypalConfig')
+const orderHelper = require('../helper/orderHelper')
 const moment = require('moment-timezone')
 
 let clientId = paypalConfig.CLIENT_ID;
@@ -12,7 +13,6 @@ let payPalClient = new paypal.core.PayPalHttpClient(environment);
 const DataBase = require('../api/database')
 
 route.post('/paypal-transaction-complete',async (req,res) => {
-    
     // 2a. Get the order ID from the request body
     const orderID = req.body.orderID;
     const userId = req.user.userID
@@ -35,7 +35,7 @@ route.post('/paypal-transaction-complete',async (req,res) => {
       }
 
       try{
-          await verifyOrders(order.result.purchase_units[0].items,order.result.purchase_units[0].amount.value)
+          await orderHelper.verifyOrders(order.result.purchase_units[0].items,order.result.purchase_units[0].amount.value)
       }catch(err){
             console.log(err)
             return res.status(400).send('Pedido invalido')
@@ -47,7 +47,7 @@ route.post('/paypal-transaction-complete',async (req,res) => {
             .catch(err => res.status(500))
       
       try{
-         await createOrder(order,userId,userName,address,req.body.cpfOrCnpj,date)
+         await orderHelper.createOrder(order.result.purchase_units[0].items,order.result.purchase_units[0].amount.value,'online',userId,userName,address,req.body.cpfOrCnpj,date)
       }catch(e){
         return res.status(500).send('Ops! Ocorreu um erro no servidor, por favor tente mais tarde :(')
       }
@@ -57,25 +57,7 @@ route.post('/paypal-transaction-complete',async (req,res) => {
       res.end();
 })
 
-  const verifyOrders = async (orders,amount) => {
-        return new Promise((resolve,reject) => {
-              let verifyAmount = 0
-              asyncForEach(orders, async (order,index) => {
-                  await DataBase.getFoodById(parseInt(order.sku))
-                      .then(food => { 
-                          verifyAmount += food[0].price * parseInt(order.quantity)
-                        })
-                        if(index == orders.length - 1){
-                            if(verifyAmount != parseFloat(amount).toFixed(2)){
-                                reject(new Error('Nao foi possivel realizar a transação'))
-                            }
-                            else{
-                                resolve()
-                            }
-                        }              
-               })
-        })
-  }
+ 
 
       async function captureAuthorization(orderId,authorization) {
         console.log('capture foi chamado')
@@ -99,41 +81,12 @@ route.post('/paypal-transaction-complete',async (req,res) => {
         }
     }
 
-const createOrder = (order,userID,userName,address,cpfOrCnpj,date) => {
-    return new Promise(async (resolve,reject) => {
-      const amount = order.result.purchase_units[0].amount.value
-      const orderDescription = await mountOrder(order)
-      const method = 'online'
-      DataBase.uploadOrder(userID,userName,cpfOrCnpj,address,method,orderDescription,amount,0,date).then(e =>{
-          resolve()
-      }).catch((e) => {
-          reject(e)
-      })
-    })
-}
 
-const mountOrder = (order) => {
-    return new Promise((resolve,reject) => {
-      let verifyIfEnd
-      let  description = order.result.purchase_units[0].items.reduce((description,item,index) => {
-      verifyIfEnd = index
-      if(index === 0){
-        return  description + " " + item.quantity + " " + item.name 
-      }else{
-        return  description + "|" + item.quantity + " " + item.name 
-      }  
-    },'')
-    if(verifyIfEnd == order.result.purchase_units[0].items.length - 1){
-       resolve(description)
+    async function asyncForEach(array, callback) {
+      for (let index = 0; index < array.length; index++) {
+        await callback(array[index], index, array);
+      }
     }
-  })
-}
-
-async function asyncForEach(array, callback) {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
-}
     
 
 module.exports = route

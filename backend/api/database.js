@@ -1,5 +1,4 @@
 
-
 const db = require('./db')
 module.exports = {
     getCategorys: () => {
@@ -13,6 +12,9 @@ module.exports = {
     },
     getAllOrders: () => {
         return db.select('orderId','userName','cpfOrCnpj','address','method','description','change','amount','status','date').from('order')
+    },
+    getOrdersByClientId: (clientId) => {
+        return db.select('orderId','description','amount','status','method').from('order').where('userId',clientId)
     },
     uploadCategory:(nameCategory,image) =>{
         return db('category').insert({nameCategory,image})

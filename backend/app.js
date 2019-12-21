@@ -13,7 +13,9 @@ const bodyParser = require('body-parser')
 const category = require('./routes/categoryRoute')
 const food = require('./routes/foodRoute')
 const auth = require('./routes/auth')
-const buy = require('./routes/buy')
+const order = require('./routes/order')
+const buyOnline = require('./routes/buyOnline')
+const buyDelivery = require('./routes/buyDelivery')
 const manager = require('./routes/manager')
 
 const sessionConfig = require('./config/sessionConfig')
@@ -56,7 +58,9 @@ const authCheck = (req, res, next) => {
 app.use('/food',food)
 app.use('/category',category)
 app.use('/auth',auth)
-app.use('/buy',authCheck,verifyCpfOrCnpj,verifyAddress,buy)
+app.use('/order',auth,order)
+app.use('/buy/online',authCheck,verifyCpfOrCnpj,verifyAddress,buyOnline)
+app.use('/buy/delivery',authCheck,verifyCpfOrCnpj,verifyAddress,buyDelivery)
 app.use('/manager',verifyIfIsManager,manager)
 
 
@@ -64,5 +68,4 @@ app.use('/manager',verifyIfIsManager,manager)
 app.listen(8080,() => {
     console.log('Server rodando')
 })
-
 
