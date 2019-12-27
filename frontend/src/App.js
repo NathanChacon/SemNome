@@ -11,7 +11,8 @@ import Navigation from './components/nav/Nav'
 import {Home} from './components/home/Home'
 import {Menu} from './components/menu/Menu'
 import {Login} from './components/login/Login'
-import {ClientOrders} from './components/clientOrders/ClientOrders'
+import ClientOrders from './components/clientOrders/ClientOrders'
+import TrackOrder from './components/trackOrder/TrackOrder'
 import Management from './components/management/Management'
 import PurchaseForm from './components/purchaseForm/PurchaseForm'
 import './App.css';
@@ -54,6 +55,9 @@ function App() {
       </Route>
       <Route exact path='/clientOrders'>
           <ClientOrders></ClientOrders>
+      </Route>
+      <Route exact path='/trackOrder'>
+         <TrackOrder></TrackOrder>
       </Route>
       <Route exact path='/management'>
           <Management></Management>

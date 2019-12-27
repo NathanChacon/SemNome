@@ -16,6 +16,9 @@ module.exports = {
     getOrdersByClientId: (clientId) => {
         return db.select('orderId','description','amount','status','method').from('order').where('userId',clientId)
     },
+    getClientOrderToTrack: (clientId,orderId) => {
+        return db.select('status').from('order').where('userId',clientId).andWhere('orderId',orderId)
+    },
     uploadCategory:(nameCategory,image) =>{
         return db('category').insert({nameCategory,image})
     },

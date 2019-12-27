@@ -1,15 +1,14 @@
 import React,{Component}from 'react'
+import {withRouter} from 'react-router-dom'
 import axios from 'axios'
 import {PayPalButton} from 'react-paypal-button-v2'
 
-export default class Example extends Component{
+ class Example extends Component{
   
   constructor(props){
     super(props)
     this.total = 0
     this.items = []
-    this.address = this.props.address
-    this.addressToVerify = this.props.addressToVerify
   }
   componentDidMount(){  
       this.props.product.forEach((e) =>{
@@ -80,14 +79,15 @@ export default class Example extends Component{
 
         onApprove={(data, actions) => {
          // Authorize the transaction
+         this.props.handleLoading()
          actions.order.authorize().then((authorization) => {
               
           // Get the authorization id
          var authorizationID = authorization.purchase_units[0]
           .payments.authorizations[0].id
 
-        const fullAddress = this.address
-        const addressToVerify = this.addressToVerify
+        const fullAddress = this.props.address
+        const addressToVerify = this.props.addressToVerify
         const cpfOrCnpj = this.props.inputCpfOrCnpjValue
           //call Server
           axios({
@@ -105,9 +105,16 @@ export default class Example extends Component{
               cpfOrCnpj:cpfOrCnpj
             }
           })
-          .then(() => {
+          .then((response) => {
+            this.props.handleLoading()
+            this.props.history.push({
+              pathname:'trackOrder',
+              state: response.data.orderId[0]
+            })
+            
           })
           .catch((e) => {
+            this.props.handleLoading()
             this.props.handleErrorAlert()
           })
         });
@@ -116,3 +123,4 @@ export default class Example extends Component{
     );
   }
 }
+export default withRouter(Example)

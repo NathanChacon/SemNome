@@ -4,6 +4,7 @@ import { withRouter,Redirect} from 'react-router-dom';
 import PaypalButton from '../paypalButton/PaypalButton'
 import './PurchaseForm.css'
 import GoogleLocation from '../googleLocation/GoogleLocation'
+import Loader from '../loader/Loader'
 import {InputCpfOrCnpj} from './inputCpfOrCnpj'
 
  const PurchaseForm = (props) => {
@@ -29,8 +30,7 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
     const [errorAlert,setErrorAlert] = useState(false)
     const [delivery,setDelivery] = useState(true)
     const [online,setOnline] = useState(false)
-
-
+    const [loadingData,setLoadingData] = useState(false)
     
     useEffect(() => {
         props.verifyToken()
@@ -63,9 +63,13 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
     const handleAddress = (address,results) => {
         setAddress(address)
         setAddressToVerify(results)
+        console.log(results)
+        console.log(addressToVerify)
     }
 
-
+    const handleLoading = () => {
+        setLoadingData(!loadingData)
+    }
 
     const handleCpfOrCnpjError = (msg,status) => {
         setErrors({
@@ -86,8 +90,11 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
     }
 
     const handleSendOrder = () => {
+            
+            setLoadingData(true)
             if(errors.googleError.status || errors.inputError.status || !selectedMethod){
                 handleErrorAlert()
+                setLoadingData(false)
             }
             else{
                 let total = 0
@@ -122,6 +129,13 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
                         amount: total,
                         method: selectedMethod
                       }
+                })
+                .then((response) => {
+                    setLoadingData(false)
+                    props.history.push({
+                        pathname:'trackOrder',
+                        state: response.data.orderId[0]
+                    })
                 })
             }
     }
@@ -168,6 +182,7 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
                               errors = {errors} 
                               inputCpfOrCnpjValue ={inputCpfOrCnpjValue}
                               handleErrorAlert = {handleErrorAlert}
+                              handleLoading = {handleLoading}
                               >
                               </PaypalButton>}
                 </div>
@@ -186,6 +201,11 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
                     <button className="m-btn-default" onClick={() =>{handleErrorAlert()}}>Entendido</button>
                 </div>
             </div>
+            {loadingData ?
+                <div className ='l-loader'>
+                    <Loader></Loader> 
+                </div> 
+            : ''}
     </section>    
     )
 }
