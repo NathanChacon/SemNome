@@ -8,16 +8,8 @@
     background-color: white;
 }
 
-.m-clienteOrder-container{
-    display: grid;
-    max-width: 50%;
-    height: 50vh;
-    gap: 6px;
-    grid-template-columns: repeat(auto-fit,minMax(320px,1fr));
-}
 
 .m-clientOrder-card{
     text-align: center;
-    border: 1px solid black;
     height: 300px;
 }

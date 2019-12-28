@@ -34,7 +34,7 @@ import './Management.css'
 
     return(
         <section className="l-management">
-            <aside className={`l-management-nav ${manegementNavVisible ? 'is-managemente-nav-visible' : 'is-managemente-nav-hidden'}`}>
+            <aside className={`l-management-nav  white-color ${manegementNavVisible ? 'is-managemente-nav-visible' : 'is-managemente-nav-hidden'}`}>
                 <header>
                     <h3>Gerenciamento</h3>
                 </header>

@@ -73,40 +73,28 @@ const handlePrice = (price,quantity) => {
     }
 
     return(
-        <section className="l-menu">
-            <div className="l-category">
+        <section className="white-color l-menu">
+            <div className="black-border m-category">
                 {category ? category.map(cat => {
                         return <button className="m-btn-default" onClick={() =>{getFoods(cat.idCategory)}}>{cat.nameCategory}</button>
                 }):'carregando'}
             </div>
-            <div className="l-display-food">
-                        {
-                            food ? food.map(element => {
-                                return    <Card className="text-center">
-                                            <CardImg top height="200px"  src={`http://localhost:8080/${element.image}`} alt="Card image cap" />
-                                                <CardBody style={{
-                                                    height:'160px'
-                                                }}>
-                                                    <CardTitle>{element.foodName}</CardTitle>
-                                                    <CardSubtitle >R${element.price}</CardSubtitle>
-                                                    <Button 
-                                                   style={{
-                                                       backgroundColor:'rgba(255, 255, 0, 0.925)',
-                                                       color:'black',
-                                                       border:'none',
-                                                       width:'100%',
-                                                       marginTop:'2%'
-                                                   }}
-                                                    onClick={() =>{handleConfirmItem(element)}}
-                                                    >
-                                                        Adicionar Na Sacola
-                                                    </Button>
-                                                 </CardBody>
-                                           </Card>
-                                       
-                            }): 'Carregando'
-                        }
+            <div className ="l-center">
+                <div className="m-grid grid-food">
+                            {
+                                food ? food.map(element => {
+                                    return  <div className="black-border m-card"> 
+                                                    <img src={`http://localhost:8080/${element.image}`} height="50%" width="100%"></img>
+                                                    <h5>{element.foodName}</h5>
+                                                    <p>R$ {element.price}</p>
+                                                    <button className="m-btn-default btn-food-card" onClick={() => {handleConfirmItem(element)}}>Adicionar na sacola</button>
+                                            </div>
+                                        
+                                }): 'Carregando'
+                            }
+                </div>
             </div>
+
             
            <ConfirmItens 
            confirmItem = {confirmItem}  addItens = {addItens} handlePrice = {handlePrice}

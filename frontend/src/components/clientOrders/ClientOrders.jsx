@@ -29,10 +29,10 @@ const ClientOrders = (props) => {
 
     return(
         <section className="l-clientOrders">
-            <div className="m-clienteOrder-container">
+            <div className="m-grid">
                    {
                        clientOrders ? clientOrders.map((order) => {
-                            return  <div className ="m-clientOrder-card">
+                            return  <div className ="black-border m-clientOrder-card">
                                         <h4>{order.description}</h4>
                                         <p>Total:{order.amount} </p>
                                         <Link to={{

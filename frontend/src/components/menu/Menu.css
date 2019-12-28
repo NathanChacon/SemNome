@@ -1,42 +1,42 @@
 .l-menu{
-    padding-top: 60px;
-    background-color: rgb(255, 255, 255);
-    height: 94vh;
+    padding-top: 74px;
+    height: 100vh;
+    flex-direction: column;
     overflow: auto;
 }
 
-.l-category{
+.m-category{
     display: flex;
-    width: 100%;
-    height: 20vh;
     justify-content: center;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    width: calc(100% - 430px);
+    height: 150px;
+  
 }
 
-.l-category .m-btn-default{
-    height: 60px;
-    padding: 10px;   
+.btn-food-card{
+    width: 300px;
 }
 
-.l-display-food{
-    width: 100%;
-    display: grid;
-    gap: 6px;
-    grid-template-columns: repeat(auto-fit,minMax(220px,1fr));
+.grid-food{
+    padding-top: 10px;
 }
 
-@media (min-width:1200px){
-    .l-category{
-        width: calc(100% - 420px);
-    }
-
-    .l-display-food{
-        width: calc(100% - 420px);
+@media(max-width: 1440px){
+    .l-menu{
+        height: calc(100vh - 45px);
     }
     
-    .l-menu{
-        padding-top: 74px;
-        height: 100vh;
+    .m-category{
+        width: 100%;
     }
-  
-  }
+
+    .grid-food{
+        grid-template-columns: 350px 350px;
+    }
+}
+
+@media(max-width: 767px){
+    .grid-food{
+        grid-template-columns: 350px;
+    }
+}
