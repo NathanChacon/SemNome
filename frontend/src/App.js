@@ -1,5 +1,9 @@
 import React,{useState,useEffect} from 'react';
 import axios from 'axios'
+import './smacss/base.css'
+import './smacss/layout.css'
+import './smacss/module.css'
+import './smacss/colors.css'
  import {
   BrowserRouter as Router,
   Switch,
@@ -20,38 +24,43 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [isLogged,setIsLogged] = useState(false)
-  const[user,setUser] = useState({
-    name:'',
-    role:''
-  })
+  const [isManager,setIsManager] = useState(false)
+  const [userName,setUserName] = useState(false)
 
   const verifyToken = () => {
       axios.get('http://localhost:8080/auth/check', {withCredentials: true}).then((res) =>{
         if(!isLogged){
           setIsLogged(true)
+          setUserName(res.data.userName)
+          setIsManager(res.data.manager)
         } 
-        setUser({name:res.data.userName,role:res.data.userRole})
-      }).catch(e =>{
+      })
+      .catch(e =>{
         setIsLogged(false)
-        setUser(null)
+        setUserName(false)
+        setIsManager(false)
       }) 
   }
+
+     useEffect(() => {
+        verifyToken()
+      },[])
 
 
   return (
     <Router>
-      <Navigation isLogged ={isLogged} verifyToken ={verifyToken} user={user}></Navigation>
+      <Navigation isLogged = {isLogged}  userName={userName} isManager = {isManager}></Navigation>
       <Route exact path="/">
-        <Home  isLogged ={isLogged} verifyToken ={verifyToken}></Home>
+        <Home></Home>
       </Route>
       <Route exact path='/menu'>
-          <Menu isLogged ={isLogged} verifyToken ={verifyToken}></Menu>
+          <Menu></Menu>
       </Route>
       <Route exact path='/login'>
           <Login isLogged ={isLogged} verifyToken ={verifyToken}></Login>
       </Route>
       <Route exact path='/purchase'>
-          <PurchaseForm isLogged ={isLogged} verifyToken ={verifyToken}></PurchaseForm>
+          <PurchaseForm isLogged ={isLogged}></PurchaseForm>
       </Route>
       <Route exact path='/clientOrders'>
           <ClientOrders></ClientOrders>
@@ -60,7 +69,7 @@ function App() {
          <TrackOrder></TrackOrder>
       </Route>
       <Route exact path='/management'>
-          <Management></Management>
+          <Management isManager = {isManager}></Management>
       </Route>
     </Router>
   );

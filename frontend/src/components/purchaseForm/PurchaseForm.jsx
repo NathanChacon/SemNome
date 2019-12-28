@@ -31,10 +31,6 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
     const [delivery,setDelivery] = useState(true)
     const [online,setOnline] = useState(false)
     const [loadingData,setLoadingData] = useState(false)
-    
-    useEffect(() => {
-        props.verifyToken()
-    },[])
 
     const handleSelectedMethod = (name) =>{
         setSelectedMethod(name)
@@ -63,8 +59,6 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
     const handleAddress = (address,results) => {
         setAddress(address)
         setAddressToVerify(results)
-        console.log(results)
-        console.log(addressToVerify)
     }
 
     const handleLoading = () => {
@@ -142,32 +136,34 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
        
     return(
         
-        <section className='l-purchase'>
-            {!props.isLogged ? <Redirect to='/login'></Redirect> : <div className='l-purchase-container'>
-                <div className="m-google-input">
+        <section className='l-fullSize white-color padding-top'>
+            {!props.isLogged ? <Redirect to='/login'></Redirect> : 
+            <div className='m-center-column purchase-container'>
+                <div className="input-border">
                     <h1>Entregar em</h1>
                     <GoogleLocation handleGoogleError={handleGoogleError} handleAddress = {handleAddress}></GoogleLocation>
                     <p className='error'>{errors.googleError.status ? errors.googleError.msg : ''}</p>
                 </div>
                 
-                <div className='l-payment-container'>
+                <div className='input-border payment-methods-container'>
                        <div className='m-payment-options'>
-                        <button onClick = {() => {
-                                setDelivery(true)
-                                setOnline(false)
-                            }}>
-                                Pagar Na Entrega
+                            <button onClick = {() => {
+                                    setDelivery(true)
+                                    setOnline(false)
+                                }
+                            }>
+                            Pagar Na Entrega
                             </button>
                             <button onClick = {() => {
                                 setDelivery(false)
                                 setOnline(true)
-                            }}>
-                                Pagar Online
+                               }
+                            }>
+                            Pagar Online
                             </button>
                         </div> 
-                       
-                        {delivery ? 
-                            <div className='m-payment-items'>
+                        {delivery ?
+                            <div className='m-grid payment-methods'>
                                 {methodsNames.map((name) => {
                                 return <button id={name} className={`methods ${selectedMethod == name ? "is-method-selected" :''}`}
                                        onClick={(e) => {handleSelectedMethod(name)}}>
@@ -175,30 +171,30 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
                                         </button>
                                 })}
                             </div>  
-                             :<PaypalButton
-                              product = {props.location.state} 
-                              address={address}
-                              addressToVerify = {addressToVerify} 
-                              errors = {errors} 
-                              inputCpfOrCnpjValue ={inputCpfOrCnpjValue}
-                              handleErrorAlert = {handleErrorAlert}
-                              handleLoading = {handleLoading}
+                             :
+                             <PaypalButton
+                                 product = {props.location.state} 
+                                 address={address}
+                                 addressToVerify = {addressToVerify} 
+                                 errors = {errors} 
+                                 inputCpfOrCnpjValue ={inputCpfOrCnpjValue}
+                                 handleErrorAlert = {handleErrorAlert}
+                                 handleLoading = {handleLoading}
                               >
                               </PaypalButton>}
                 </div>
-                <div className="l-payment-info">
+                <div className="payment-cpf-cnpj">
                             <InputCpfOrCnpj handleCpfOrCnpjError = {handleCpfOrCnpjError}  handleCpfOrCnpjValue = {handleCpfOrCnpjValue}></InputCpfOrCnpj>
                             {<p className='error'>{errors.inputError.status ? errors.inputError.msg : ''}</p>}
                 </div>
-                {delivery ?<button className="m-btn-default" onClick={() => {handleSendOrder()}}>Fazer Pedido</button>: '' }  
-                
+                {delivery ?<button className="m-btn-default purchase" onClick={() => {handleSendOrder()}}>Fazer Pedido</button>: '' }    
             </div>
        }
-            <div className={`m-error-alert ${errorAlert ? "is-alert-visible" :"is-alert-hidden"}`}>
-                <div className="m-error-card">
+            <div className={`m-error-container ${errorAlert ? "is-alert-visible" :"is-alert-hidden"}`}>
+                <div className="m-card">
                     <h3>Atenção</h3>
                     <p>Você deve preencher todas as informações para prosseguir</p>
-                    <button className="m-btn-default" onClick={() =>{handleErrorAlert()}}>Entendido</button>
+                    <button className="m-btn-default purchase-error" onClick={() =>{handleErrorAlert()}}>Entendido</button>
                 </div>
             </div>
             {loadingData ?

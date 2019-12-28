@@ -1,12 +1,8 @@
-.l-login{
+.l-center.login{
     background-image: url('../../assets/loginBg.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
 }
 
 .btnFace{
@@ -18,8 +14,6 @@
     width: 400px;
     padding: 10px;
 }
-
-
 
 .btnFace:hover{
     text-decoration: none;

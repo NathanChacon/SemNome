@@ -4,10 +4,6 @@ import{OwlCarouselComponent} from '../owlCarousel/OwlCarousel'
 
 import './Home.css'
 export const Home = (props) => {
-    
-    useEffect(() =>{
-        props.verifyToken()
-    },[])
 
     return(
         <React.Fragment>
@@ -22,7 +18,7 @@ export const Home = (props) => {
                     </div>
                 </div>
             </section>
-            <section className="l-intermediate center">
+            <section className="black-color l-intermediate l-center">
                    <div className="m-text-center">
                        <h1>Horários</h1>
                        <p><span className='m-text-featured'>Segunda - Sexta</span> 12hr-20hr</p>
@@ -30,7 +26,7 @@ export const Home = (props) => {
                        <p><span className='m-text-featured'>Domingo</span> 12hr-20hr</p>
                    </div>
             </section>
-            <section className="l-carousel">
+            <section className="black-color l-carousel">
                 <OwlCarouselComponent></OwlCarouselComponent>
             </section>
         </React.Fragment>

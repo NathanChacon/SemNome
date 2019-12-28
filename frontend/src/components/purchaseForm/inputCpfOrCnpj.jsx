@@ -130,8 +130,8 @@ export const InputCpfOrCnpj = (props) => {
     return(
             <React.Fragment>
                 <h1>CPF/CNPJ</h1>
-                <form className="m-purchase-form">
-                    <input type="text" maxLength="18" onChange={(e) =>{handleInput(e)}} value={inputValue}></input>
+                <form>
+                    <input type="text" className="input-purchase" maxLength="18" onChange={(e) =>{handleInput(e)}} value={inputValue}></input>
                 </form>
             </React.Fragment>
     )

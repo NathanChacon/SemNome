@@ -1,4 +1,21 @@
 .location-search-input{
     padding: 20px;
+    width: 500px;
     font-size: 1.2em;
+}
+
+@media (max-width:1024px){
+    .location-search-input{
+        width: 350px;
+        padding: 15px;
+    }
+
+    .suggestion-item{
+        padding: 15px;
+    }
+
+    .suggestion-item--active{
+        padding: 15px;
+    }
+
 }

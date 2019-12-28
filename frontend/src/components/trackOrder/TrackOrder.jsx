@@ -29,25 +29,24 @@ const TrackOrder = (props) => {
     }   
 
     return(
-        <section className='l-track-order'>
-            <div className='m-container-orderStatus'>
-                <div className='m-circle-status'>
+        <section className='padding-top black-color l-center'>
+            <div className='m-center order-status'>
+                <div className='m-center-column'>
                     <div className="circle-shape is-circle-activated">
 
                     </div>
-                    <div className="m-status-text is-status-text-activated">
+                    <div className="status-text is-status-text-activated">
                         <header>
                             <h5>Entregue</h5>
                         </header>
                         <p>O seu pedido foi enviado com sucesso!</p>
                     </div>
                 </div>
-
-                <div className='m-circle-status'>
+                <div className='m-center-column'>
                     <div className={`circle-shape ${orderStatus === 'preparing' || orderStatus === 'ready' ? 'is-circle-activated':''}`}>
 
                     </div>
-                    <div className={`m-status-text ${orderStatus === 'preparing' || orderStatus === 'ready'  ? 'is-status-text-activated':''}`}>
+                    <div className={`status-text ${orderStatus === 'preparing' || orderStatus === 'ready'  ? 'is-status-text-activated':''}`}>
                         <header>
                             <h5>Preparando</h5>
                         </header>
@@ -55,11 +54,11 @@ const TrackOrder = (props) => {
                     </div>
                 </div>
 
-                <div className='m-circle-status'>
+                <div className='m-center-column'>
                     <div className={`circle-shape ${orderStatus === 'ready' ? 'is-circle-activated':''}`}>
 
                     </div>
-                    <div className={`m-status-text ${orderStatus === 'ready' ? 'is-status-text-activated':''}`}>
+                    <div className={`status-text ${orderStatus === 'ready' ? 'is-status-text-activated':''}`}>
                         <header>
                             <h5>A caminho</h5>
                         </header>

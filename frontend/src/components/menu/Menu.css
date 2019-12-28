@@ -1,7 +1,4 @@
-.l-menu{
-    padding-top: 74px;
-    height: 100vh;
-    flex-direction: column;
+.l-fullSize.menu{
     overflow: auto;
 }
 
@@ -22,7 +19,7 @@
 }
 
 @media(max-width: 1440px){
-    .l-menu{
+    .l-fullSize.menu{
         height: calc(100vh - 45px);
     }
     

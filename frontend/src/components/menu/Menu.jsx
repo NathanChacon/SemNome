@@ -21,7 +21,6 @@ export const Menu = (props) =>{
     useEffect(() => {
         getFoods(1)
         getAllCategories()
-        props.verifyToken()
     },[])
 
     useEffect(() => {
@@ -73,13 +72,13 @@ const handlePrice = (price,quantity) => {
     }
 
     return(
-        <section className="white-color l-menu">
+        <section className="white-color padding-top l-fullSize menu">
             <div className="black-border m-category">
                 {category ? category.map(cat => {
                         return <button className="m-btn-default" onClick={() =>{getFoods(cat.idCategory)}}>{cat.nameCategory}</button>
                 }):'carregando'}
             </div>
-            <div className ="l-center">
+            <div className ="m-center">
                 <div className="m-grid grid-food">
                             {
                                 food ? food.map(element => {
