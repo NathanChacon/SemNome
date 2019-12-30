@@ -4,10 +4,10 @@
 
 .m-category{
     display: flex;
+    align-items: center;
     justify-content: center;
     width: calc(100% - 430px);
     height: 150px;
-  
 }
 
 .btn-food-card{

@@ -75,7 +75,7 @@ const handlePrice = (price,quantity) => {
         <section className="white-color padding-top l-fullSize menu">
             <div className="black-border m-category">
                 {category ? category.map(cat => {
-                        return <button className="m-btn-default" onClick={() =>{getFoods(cat.idCategory)}}>{cat.nameCategory}</button>
+                        return <button className="m-btn yellow-color m-btn-sm" onClick={() =>{getFoods(cat.idCategory)}}>{cat.nameCategory}</button>
                 }):'carregando'}
             </div>
             <div className ="m-center">
@@ -86,7 +86,7 @@ const handlePrice = (price,quantity) => {
                                                     <img src={`http://localhost:8080/${element.image}`} height="50%" width="100%"></img>
                                                     <h5>{element.foodName}</h5>
                                                     <p>R$ {element.price}</p>
-                                                    <button className="m-btn-default btn-food-card" onClick={() => {handleConfirmItem(element)}}>Adicionar na sacola</button>
+                                                    <button className="m-btn yellow-color m-btn-lg" onClick={() => {handleConfirmItem(element)}}>Adicionar na sacola</button>
                                             </div>
                                         
                                 }): 'Carregando'

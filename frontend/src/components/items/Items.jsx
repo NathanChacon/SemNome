@@ -26,7 +26,7 @@ export const Items = (props) =>{
                         {props.selectedItems ? props.selectedItems.map(e =>{
                              return<li>
                                          {e.foodName + " " + e.price + " " + e.quantity}
-                                         <button onClick={() =>{props.removeItem(e.idRemove)}}>Remover</button>
+                                         <button className="remove-color" onClick={() =>{props.removeItem(e.idRemove)}}>Remover</button>
                                     </li>   
                 }):''}
                    </ul>
@@ -35,7 +35,7 @@ export const Items = (props) =>{
                 <Link to={{
                             pathname:'purchase',
                             state: props.selectedItems
-                        }} className={`m-btn-default link ${props.selectedItems[0] ? 'is-link-visible' : 'is-link-hidden'}`}>Confirmar</Link>
+                        }} className={`m-btn yellow-color m-btn-md m-link  ${props.selectedItems[0] ? 'is-link-visible' : 'is-link-hidden'}`}>Confirmar</Link>
             </div>
     )
 

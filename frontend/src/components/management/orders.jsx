@@ -3,8 +3,6 @@ import axios from 'axios'
 import './orders.css'
 export const Orders= (props) => {
     const [orders,setOrder] = useState(false)
-    
-
     useEffect(() => {
         getOrders()
         setInterval(() => {
