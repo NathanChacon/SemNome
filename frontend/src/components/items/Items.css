@@ -1,3 +1,10 @@
+
+.remove-color{
+    background: none;
+    color: #d9534f;
+    text-decoration: underline;
+}
+
  .food-items{
      display: flex;
      flex-direction: column;

@@ -6,7 +6,7 @@ th,td{
     border-collapse: collapse;
     min-width: 400px;
     border-radius: 5px 5px 0 0;
-    width: 1480px;
+    width: 1450px;
     height: 100%;
     overflow: auto;
 }
@@ -33,4 +33,23 @@ th,td{
     padding:5px;
     width: 100px;
     display: block;
+}
+
+
+@media (max-width:1700px){
+    .l-order-table{
+        width: 1200px;
+    }
+}
+
+@media (max-width:1440px){
+    .l-order-table{
+        width: 1310px;
+    }
+}
+
+@media (max-width:1024px){
+    .l-order-table{
+        width: 960px;
+    }
 }
