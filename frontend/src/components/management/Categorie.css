@@ -4,6 +4,7 @@
 
 .m-categories-list{
     width: 100%;
+    margin-bottom: 6px;
     background-color: rgb(248, 248, 248);
     box-shadow: 0 4px 2px -2px gray;
     align-items: center;
@@ -15,7 +16,7 @@
 
 .m-center.container-btn{
     width: 100%;
-    margin-top: 20px;
+    margin-bottom: 4px;
 }
 
 @media(max-width:900px){

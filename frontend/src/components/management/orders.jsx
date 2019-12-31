@@ -63,13 +63,13 @@ export const Orders= (props) => {
                                       <td>{order.method}</td>
                                       <td>{order.date}</td>
                                       <td className="buttons-table-order">
-                                          <button className="btn-warning" onClick ={() => {
+                                          <button className="m-btn  m-btn-sm primary-color" onClick ={() => {
                                               changeOrderStatus(order.orderId,'preparing')
                                           }}>Preparando</button>
-                                          <button className="btn-success" onClick ={() => {
+                                          <button className="m-btn m-btn-sm success-color" onClick ={() => {
                                               changeOrderStatus(order.orderId,'ready')
                                           }}>Pronto</button>
-                                          <button className="btn-danger" onClick ={() => {
+                                          <button className=" m-btn m-btn-sm danger-color" onClick ={() => {
                                               changeOrderStatus(order.orderId,'finish')
                                           }}>Finalizado</button>
                                       </td>

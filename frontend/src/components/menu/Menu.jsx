@@ -82,7 +82,7 @@ const handlePrice = (price,quantity) => {
                 <div className="m-grid grid-food">
                             {
                                 food ? food.map(element => {
-                                    return  <div className="black-border m-card"> 
+                                    return  <div className="black-border m-card card-food"> 
                                                     <img src={`http://localhost:8080/${element.image}`} height="50%" width="100%"></img>
                                                     <h5>{element.foodName}</h5>
                                                     <p>R$ {element.price}</p>

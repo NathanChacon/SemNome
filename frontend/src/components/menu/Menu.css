@@ -1,6 +1,3 @@
-.l-fullSize.menu{
-    overflow: auto;
-}
 
 .m-category{
     display: flex;
@@ -14,15 +11,15 @@
     width: 300px;
 }
 
+.m-card.card-food{
+    margin-bottom: 15px;
+}
+
 .grid-food{
     padding-top: 10px;
 }
 
 @media(max-width: 1440px){
-    .l-fullSize.menu{
-        height: calc(100vh - 45px);
-    }
-    
     .m-category{
         width: 100%;
     }
