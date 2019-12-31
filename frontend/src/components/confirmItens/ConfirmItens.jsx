@@ -19,7 +19,7 @@ export const ConfirmItens = (props) =>{
  
     
     return(
-            <div className = {`l-container-confirm ${props.confirmItem ?' is-confirm-visible':' is-confirm-hidden'}`}>
+            <div className = {`m-focus-container ${props.confirmItem ?' is-confirm-visible':' is-confirm-hidden'}`}>
             <div className='m-confirm'>
                   {props.confirmItem ?
                   <ul>
@@ -31,7 +31,7 @@ export const ConfirmItens = (props) =>{
                            {quantity}
                            <button className="btn-quantity" onClick={() =>{handleQuantity('increase')}}> + </button>
                        </li>
-                      <button className="m-btn-default comfirmItems" onClick={() =>{props.addItens(props.confirmItem,quantity)}}>Adicionar</button>
+                      <button className="m-btn yellow-color m-btn-md comfirmItems" onClick={() =>{props.addItens(props.confirmItem,quantity)}}>Adicionar</button>
                   </ul>
                   :''}
             </div>  

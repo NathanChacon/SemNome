@@ -28,8 +28,8 @@ const ClientOrders = (props) => {
 
 
     return(
-        <section className="l-clientOrders">
-            <div className="m-grid">
+        <section className="l-center client-order white-color">
+            <div className="m-grid orders">
                    {
                        clientOrders ? clientOrders.map((order) => {
                             return  <div className ="black-border m-clientOrder-card">
@@ -38,7 +38,7 @@ const ClientOrders = (props) => {
                                         <Link to={{
                                             pathname:'trackOrder',
                                             state: order.orderId
-                                    }} className='m-btn-default link'>Acompanhar Pedido</Link>
+                                    }} className='m-btn m-btn-md yellow-color m-link'>Acompanhar Pedido</Link>
                                     </div>
                        }): ''
                    }

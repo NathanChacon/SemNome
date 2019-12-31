@@ -32,6 +32,7 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
     const [online,setOnline] = useState(false)
     const [loadingData,setLoadingData] = useState(false)
 
+
     const handleSelectedMethod = (name) =>{
         setSelectedMethod(name)
     }
@@ -134,8 +135,7 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
             }
     }
        
-    return(
-        
+    return(      
         <section className='l-fullSize white-color padding-top'>
             {!props.isLogged ? <Redirect to='/login'></Redirect> : 
             <div className='m-center-column purchase-container'>
@@ -190,7 +190,7 @@ import {InputCpfOrCnpj} from './inputCpfOrCnpj'
                 {delivery ?<button className="m-btn-default purchase" onClick={() => {handleSendOrder()}}>Fazer Pedido</button>: '' }    
             </div>
        }
-            <div className={`m-error-container ${errorAlert ? "is-alert-visible" :"is-alert-hidden"}`}>
+            <div className={`m-focus-container ${errorAlert ? "is-alert-visible" :"is-alert-hidden"}`}>
                 <div className="m-card">
                     <h3>Atenção</h3>
                     <p>Você deve preencher todas as informações para prosseguir</p>

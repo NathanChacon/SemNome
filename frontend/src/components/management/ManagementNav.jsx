@@ -9,11 +9,11 @@ import './ManagementNav.css'
 export const ManagementNav = (props) => {
     const [manegementNavVisible,setManegementNavVisible] = useState(false)
     return(
-        <section className ="l-fullSize">
-        <aside className={`m-aside management black-border white-color ${manegementNavVisible ? 'is-managemente-nav-visible' : 'is-managemente-nav-hidden'}`}>
-        <header>
+        <section className ="l-fullSize teste ">
+         <aside className={`m-aside management black-border white-color ${manegementNavVisible ? 'is-managemente-nav-visible' : 'is-managemente-nav-hidden'}`}>
+         <header>
             <h3>Gerenciamento</h3>
-        </header>
+         </header>
         <ul>
             <li>
                 <Link to ="/management/orders" className ="m-link">Pedidos</Link>

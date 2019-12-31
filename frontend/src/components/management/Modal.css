@@ -1,0 +1,20 @@
+.m-modal{
+    width: 600px;
+    height: 400px;
+    position: fixed;
+    top: 74px;
+    left: calc(50% - 300px);
+    transition: top 0.4s linear;
+}
+
+.m-modal .m-btn{
+    margin-top: 10px;
+}
+
+.is-modal-hidden{
+    top: -400px
+}
+
+.is-modal-visible{
+    top: 74px;
+}

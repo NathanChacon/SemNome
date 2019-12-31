@@ -1,14 +1,12 @@
-.l-clientOrders{
-    width: 100%;
-    height:100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 74px;
-    background-color: white;
+
+.l-center.client-order{
+    position: absolute;
+    margin-top: 74px;
 }
 
-
+.m-grid.orders{
+    height: 100%;
+}
 .m-clientOrder-card{
     text-align: center;
     height: 300px;
