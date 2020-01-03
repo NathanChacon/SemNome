@@ -2,12 +2,48 @@
 .d-inline-block{
     display: inline-block;
 }
+
 .m-grid{
     display: grid;
     gap: 6px;
     grid-template-columns: 350px 350px 350px 350px;
     grid-template-rows: auto;
-  }
+}
+
+.m-list-container{
+    width: 900px;
+    max-height: 700px;
+    overflow: auto;
+}
+
+
+.m-list-container .m-btn{
+    margin: 10px;
+}
+
+.m-list-items{
+    width: 100%;
+    margin-bottom: 6px;
+    box-shadow: 0 4px 2px -2px gray;
+    align-items: center;
+}
+
+.m-list-items .m-btn{
+    width: 150px;
+}
+
+.m-modal{
+    width: 600px;
+    height: 400px;
+    position: fixed;
+    top: 74px;
+    left: calc(50% - 300px);
+    transition: top 0.4s linear;
+}
+
+.m-modal .m-btn{
+    margin-top: 10px;
+}
 
 .m-aside{
     width: 400px;
@@ -101,7 +137,8 @@
 }
 
 .m-btn-sm{
-   width: 100px;
+    font-size: 0.8em;
+    width: 100px;
 }
 
 .m-btn-lg{

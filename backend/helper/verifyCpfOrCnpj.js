@@ -1,5 +1,6 @@
 function verifyCpfOrCnpj(req,res,next){
     if(!req.body.cpfOrCnpj){
+        console.log('erro aqui')
         return res.status(400).send('Por favor preencha as informações de cpf ou cnpj corretamente')
     }
 

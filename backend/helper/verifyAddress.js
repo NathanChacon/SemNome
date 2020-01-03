@@ -1,6 +1,7 @@
  const verifyAddress = async (req,res,next) => {
-
+    console.log(req.body)
     if(!req.body.addressToVerify){
+        console.log('erro body')
         return res.status(400).send('Preencha o endereço corretamente')
     }
 
@@ -11,6 +12,7 @@
         await isAdmAreaValid(results[0].address_components[4].long_name)
         await isPoliticalAreaValid(results[0].address_components[2].long_name)
     }catch(e){
+        console.log('erro aqui')
         return res.status(400).send(e)
     }
     

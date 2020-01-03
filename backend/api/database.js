@@ -4,6 +4,18 @@ module.exports = {
     getCategorys: () => {
         return db.select('*').from('category')
     },
+    getCategoryImagePath: (categoryId) => {
+        return db.select('image').from('category').where('idCategory',categoryId)
+    },
+    updateCategoryName:(categoryId,categoryName) => {
+        return db('category').where('idCategory',categoryId).update('nameCategory',categoryName)
+    },
+    updateCategoryImage:(categoryId,image) => {
+        return db('category').where('idCategory',categoryId).update('image',image)
+    },
+    deleteCategory: (categoryId) => {
+        return db('category').where('idCategory',categoryId).del()
+    },
     getFoodById: (id) => {
         return db.select('*').from('food').where('idFood',id)
     },

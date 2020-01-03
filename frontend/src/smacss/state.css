@@ -1,0 +1,8 @@
+
+.is-modal-hidden{
+    top: -400px
+}
+
+.is-modal-visible{
+    top: 74px;
+}

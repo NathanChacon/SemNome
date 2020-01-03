@@ -12,6 +12,10 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
   }
 
+  .black-border-top{
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
   .yellow-color{
     background-color: #FFFF33;
   }

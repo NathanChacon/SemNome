@@ -1,6 +1,7 @@
 const route = require('express').Router()
 const DataBase = require('../api/database')
-const upload = require('../storageFile')
+const uploadImage = require('../storageFile')
+const deleteImage = require('../helper/deleteImage')
 
 route.get('/check',(req,res,next) => {
     return res.status(200).send()
@@ -27,19 +28,64 @@ route.put('/orderStatus',(req,res,next) => {
     })
    .catch((e) => {
      console.log(e)
-     console.log('erro no server')
    })
 })
 
-route.post('/uploadCategory',upload,(req,res,next) => {
-  console.log(req.file.path)
-  console.log(req.body.categoryName)
+route.post('/uploadCategory',uploadImage,(req,res,next) => {
+
   const newPath = req.file.path.split('public')[1]
   DataBase.uploadCategory(req.body.categoryName,newPath).then(() =>{
       res.status(200).send('Categoria criada com sucesso')
   }).catch(e =>{
       res.status(500).send('Erro no servidor')
   })
+})
+
+route.put('/updateCategoryName/:id',(req,res,next) => {
+    DataBase.updateCategoryName(req.params.id,req.body.categoryName)
+    .then(() => {
+        return res.status(200).send()
+    })
+    .catch((e) => {
+        console.log(e)
+    })
+})
+
+route.put('/updateCategoryImage/:id',uploadImage,(req,res,next) => {
+    const newPath = req.file.path.split('public')[1]    
+    DataBase.getCategoryImagePath(req.params.id)
+        .then((result) => {
+            deleteImage(result[0].image)
+            DataBase.updateCategoryImage(req.params.id,newPath)
+            .then(() => {
+                return res.status(200).send()
+            })
+            .catch((e) => {
+                console.log(e)
+                return res.status(500).send()
+            })
+        })
+        .catch((e) => {
+            console.log(e)
+            return res.status(500).send()
+        })     
+})
+
+route.delete('/deleteCategory/:id',(req,res,next) => {
+    DataBase.getCategoryImagePath(req.params.id)
+    .then((result) => {
+        deleteImage(result[0].image)
+        DataBase.deleteCategory(req.params.id)
+        .then((result) => {
+            res.status(200).send()
+        })
+        .catch((e) => {
+            res.status(500).send()
+        })
+    })
+    .catch((e) => {
+        res.status(500).send()
+    })
 })
 
 
