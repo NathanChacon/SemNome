@@ -19,10 +19,7 @@ export const ManagementNav = (props) => {
                 <Link to ="/management/orders" className ="m-link">Pedidos</Link>
             </li>
             <li>
-                <Link to ="/management/categories" className ="m-link">Cartegorias</Link>
-            </li>
-            <li>
-                <Link to ="/orders" className ="m-link">Comidas</Link>
+                <Link to ="/management/categories" className ="m-link">Refeições</Link>
             </li>
             <li>
                 <Link to ="/orders" className ="m-link">Usuarios</Link>

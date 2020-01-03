@@ -24,8 +24,8 @@ const verifyOrders = async (orders,amount) => {
 const createOrder = (order,amount,method,userID,userName,address,cpfOrCnpj,date) => {
     return new Promise(async (resolve,reject) => {
       const orderDescription = await mountOrder(order)
-      DataBase.uploadOrder(userID,userName,cpfOrCnpj,address,method,orderDescription,amount,0,date).then(e =>{
-          resolve()
+      DataBase.uploadOrder(userID,userName,cpfOrCnpj,address,method,orderDescription,amount,0,date).then(id =>{ 
+          resolve(id)
       }).catch((e) => {
           reject(e)
       })

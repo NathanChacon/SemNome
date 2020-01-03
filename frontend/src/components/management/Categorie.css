@@ -1,26 +1,52 @@
-.m-card.categorie{
-    width: 300px;
+.btn-cat{
+    margin: 15px;
 }
 
-.m-categories-list{
+.food-header{
     width: 100%;
-    margin-bottom: 6px;
-    background-color: rgb(248, 248, 248);
-    box-shadow: 0 4px 2px -2px gray;
-    align-items: center;
+    padding-top: 5px;
+    margin-top: 10px;
+    text-align: center;
+}
+.m-select-form{
+    margin: 15px;
 }
 
-.m-categories-list .m-btn{
-    margin: 10px;
+.m-list-container.food{
+    margin-top: 10px;
+}
+
+.m-card.list{
+    width: 200px;
+    height: 200px;
+}
+
+.m-card.alert{
+    width: 400px;
+}
+
+.m-card.alert .m-btn{
+    margin-top: 10px;
 }
 
 .m-center.container-btn{
     width: 100%;
-    margin-bottom: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.is-alert-visible{
+    visibility: visible;
+    display: flex;
+}
+
+.is-alert-hidden{
+    visibility: hidden;
+    display: none;
 }
 
 @media(max-width:900px){
-    .m-categories-list{
+    .m-list-items{
         flex-direction: column;
     }
 }
