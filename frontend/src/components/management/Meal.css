@@ -1,0 +1,46 @@
+.btn-cat{
+    margin: 15px;
+}
+
+.header-cat{
+    padding: 10px;
+}
+
+.m-list-container.food{
+    margin-top: 10px;
+}
+
+.m-card.list{
+    width: 200px;
+    height: 200px;
+}
+
+.m-card.alert{
+    width: 400px;
+}
+
+.m-card.alert .m-btn{
+    margin-top: 10px;
+}
+
+.m-center.container-btn{
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.is-alert-visible{
+    visibility: visible;
+    display: flex;
+}
+
+.is-alert-hidden{
+    visibility: hidden;
+    display: none;
+}
+
+@media(max-width:900px){
+    .m-list-items{
+        flex-direction: column;
+    }
+}

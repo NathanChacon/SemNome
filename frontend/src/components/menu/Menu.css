@@ -7,6 +7,10 @@
     height: 150px;
 }
 
+.m-center.food-display{
+    width: calc(100% - 430px);
+}
+
 .btn-food-card{
     width: 300px;
 }
@@ -17,11 +21,16 @@
 
 .grid-food{
     padding-top: 10px;
+    grid-template-columns: 350px 350px 350px;
 }
 
 @media(max-width: 1440px){
     .m-category{
         width: 100%;
+    }
+
+    .m-center.food-display{
+        width: 100%
     }
 
     .grid-food{

@@ -28,7 +28,7 @@ export const Menu = (props) =>{
     },[newPrice])
 
     const getFoods = (id) =>{
-        axios.get( `http://localhost:8080/food/${id}`).then((res) =>{
+        axios.get(`http://localhost:8080/food/byCategory/${id}`).then((res) =>{
                     setFood(res.data.food)
         })
     }
@@ -78,7 +78,7 @@ const handlePrice = (price,quantity) => {
                         return <button className="m-btn yellow-color m-btn-sm" onClick={() =>{getFoods(cat.idCategory)}}>{cat.nameCategory}</button>
                 }):'carregando'}
             </div>
-            <div className ="m-center">
+            <div className ="m-center food-display">
                 <div className="m-grid grid-food">
                             {
                                 food ? food.map(element => {

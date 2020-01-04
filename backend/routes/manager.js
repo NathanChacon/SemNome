@@ -41,6 +41,18 @@ route.post('/uploadCategory',uploadImage,(req,res,next) => {
   })
 })
 
+route.post('/uploadFood',uploadImage,(req,res,next) => {
+    const newPath = req.file.path.split('public')[1]
+    
+    DataBase.uploadFood(req.body.foodName,"teste",newPath,req.body.foodPrice,req.body.foodCategory)
+    .then(() => {
+        res.status(200).send('Refeiçao criada com sucesso')
+    })
+    .catch((e) => {
+        console.log(e)
+    })
+  })
+
 route.put('/updateCategoryName/:id',(req,res,next) => {
     DataBase.updateCategoryName(req.params.id,req.body.categoryName)
     .then(() => {

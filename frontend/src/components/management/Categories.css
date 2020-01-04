@@ -2,14 +2,8 @@
     margin: 15px;
 }
 
-.food-header{
-    width: 100%;
-    padding-top: 5px;
-    margin-top: 10px;
-    text-align: center;
-}
-.m-select-form{
-    margin: 15px;
+.header-cat{
+    padding: 10px;
 }
 
 .m-list-container.food{

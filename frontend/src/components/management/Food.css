@@ -1,0 +1,14 @@
+.food-header{
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.m-select-form{
+    margin: 15px;
+}
+
+.m-select-form select{
+    padding: 5px;
+    margin: 5px;
+}
